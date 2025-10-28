@@ -1,11 +1,14 @@
-from django.shortcuts import render
-
-from django.http import HttpResponse
 '''
 Author: Quinn (gigawttz)
 
 What it Does: passes requests to templates/app/.. and serves pages
 '''
+
+
+from django.shortcuts import render, redirect
+
+from .forms import CreateUserForm
+
 
 def homepage(request):
 
@@ -13,7 +16,24 @@ def homepage(request):
 
 def register(request):
 
-    return render(request, 'app/register.html')
+    form = CreateUserForm()
+
+    if request.method == "POST":
+        
+
+        form = CreateUserForm(request.POST)
+
+        if form.is_valid():
+
+            
+            form.save()
+
+            return redirect('login')
+
+
+    context = {'registerform': form}
+
+    return render(request, 'app/register.html', context= context)
 
 
 def login(request):
