@@ -1,3 +1,20 @@
-<html>
-    <h1>Hello</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+</head>
+<body>
+    <h1>Login</h1>
+
+    <form method="post" action="{% url '' %}">
+        {% csrf_token %}
+        {{ loginform.as_p }}
+        <button type="submit">Login</button>
+    </form>
+    <h3>Dont have an account?</h3>
+    <a href="{% url 'go-to-register' %}">Register Now</a>
+</body>
 </html>

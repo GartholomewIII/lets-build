@@ -5,12 +5,16 @@ from . import views
 
 urlpatterns = [
     
-    path('', views.homepage, name= ""), #routes to homepage
+    path("homepage", views.homepage, name= "homepage"), #routes to homepage
 
-    path('register', views.register, name= "register"),
+    path("register", views.register, name= "register"),
 
-    path('login', views.login, name= "login"),
+    path("", views.login, name= ""),
 
-    path('dashboard', views.dashboard, name= "dashboard"),
+    path("dashboard", views.dashboard, name= "dashboard"),
+
+    path("user-logout", views.user_logout, name= "user-logout"),
+
+    path("go-to-register", views.go_to_register, name= "go-to-register")
 
 ]
