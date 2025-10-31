@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
 <head>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,11 +10,16 @@
 </head>
 <body>
     <h1>Register</h1>
+    <div class="register-bg">
+
+    
 
     <form method="post" action="{% url 'register' %}">
         {% csrf_token %}
         {{ registerform.as_p }}
         <button type="submit">Create account</button>
     </form>
+
+    </div>
 </body>
 </html>
