@@ -1,0 +1,91 @@
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Recommended for consistent box model behavior */
+}
+
+
+/* sm ≥576px */
+@media (min-width: 576px) { 
+
+}
+
+@media (min-width: 992px) {
+
+}
+
+/* xl ≥1200px */
+@media (min-width: 1200px) { 
+    /*-----LOGIN-----*/
+    .login section.vh-100 .card {
+        max-width: clamp(320px, 85vw, 750px); 
+        margin-inline: auto;
+        overflow: hidden; 
+        background-color: white
+    }
+
+
+    .login .vh-100 {
+        height: auto !important;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        background-image: url(assets/login-bg-inverted.gif);
+    }
+
+
+    section.vh-100 .card-body {
+        padding: clamp(1rem, 2.5vw, 2rem);
+    }
+
+
+    section.vh-100 .h1.fw-bold { font-size: clamp(1.25rem, 2.2vw, 1.75rem); }
+    section.vh-100 h5 { font-size: clamp(1rem, 1.8vw, 1.25rem); }
+
+    section.vh-100 .form-control-lg { font-size: 1rem; padding: .5rem .75rem; }
+    section.vh-100 .btn.btn-lg       { font-size: 1rem; padding: .6rem 1rem; }
+
+
+    section.vh-100 .row.g-0 { align-items: stretch; }
+
+    section.vh-100 .d-none.d-md-block img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+
+    section.vh-100 > .container.py-5 { padding-block: 2rem; }
+
+    /* DEFAULT DJANGO FORM EDITS */
+    #id_username,
+    #id_password {
+    
+        display: block;
+        width: 100%;
+        padding: .5rem .75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        border: 1px solid #ced4da;
+        border-radius: .375rem;
+        background-color: #fff;
+        font-size: small;
+    }
+
+    #id_username:focus,
+    #id_password:focus {
+        outline: 0;
+        border-color: #000000;
+        box-shadow: 0 0 0 .25rem rgba(0, 0, 0, 0.25);
+    }
+
+    form p { margin-bottom: 1rem; }
+
+}
+
+@media (min-width: 1400px) {
+
+}
