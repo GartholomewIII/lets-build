@@ -2,7 +2,7 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box; /* Recommended for consistent box model behavior */
+    box-sizing: border-box; 
 }
 
 
@@ -50,38 +50,42 @@
     }
 
     #id_username, #id_email, #id_password1, #id_password2 {
-        border: 2px solid black;
         font-size: small;
     }
 
-    
     form p { margin-bottom: .6rem; }
-    form p > label { margin-bottom: .35rem; font-weight: 500; }
-
-    /* Slightly smaller "lg" controls to reduce vertical bulk */
+    form p > label { margin-bottom: .35rem; font-weight: 600; }
     .form-control-lg { font-size: 1rem; padding: .5rem .75rem; }
-    .btn-lg         { font-size: 1rem; padding: .6rem 1rem; }
+    .btn-lg { font-size: 1rem; padding: .6rem 1rem; }
 
-    /* Keep the image from warping as the card height changes */
+    form .helptext { display: none; }
+
     .row.g-0 { align-items: stretch; }
     .d-none.d-md-block img { width: 100%; height: 100%; object-fit: cover; }
 
-    form { display: grid; grid-template-columns: 1fr 1fr; column-gap: 1rem; }
+    form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem 1rem;
+    }
 
-  /* By default, each <p> spans both columns (full width) */
-    form p { grid-column: 1 / -1; }
+    form p { display: contents; }
 
-    /* Preferred: select the two password <p> elements by their input IDs (modern browsers) */
-    form p:has(#id_password1),
-    form p:has(#id_password2) { grid-column: span 1; }
+    form > * { grid-column: 1 / -1; }
 
-    /* Fallback if :has() isn't supported: assume field order = username, email, password1, password2 */
-    form p:nth-of-type(3),
-    form p:nth-of-type(4) { grid-column: span 1; }
+    label[for="id_password2"] { display: none; }
+    #hint_id_password1, #hint_id_password2 { display: none; }
 
-    /* Make the submit button and any error lists span full width */
+    label[for="id_password1"] { grid-column: 1 / -1; margin-bottom: .25rem; }
+
+    #id_password1 { grid-column: 1; }
+    #id_password2 { grid-column: 2; }
+
     .pt-1.mb-4,
-    form ul.errorlist { grid-column: 1 / -1; }
+    form > a,
+    form > p { grid-column: 1 / -1; }
+
+
 }
 
 @media (min-width: 1400px) {
