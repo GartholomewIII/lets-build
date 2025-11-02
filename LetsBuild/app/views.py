@@ -78,3 +78,4 @@ def user_logout(request):
 def go_to_register(request):
 
     return redirect("register")
+

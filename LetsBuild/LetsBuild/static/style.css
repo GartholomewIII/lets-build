@@ -67,7 +67,7 @@
     }
 
 
-    section.vh-100 {
+    .login .vh-100 {
         height: auto !important;
         min-height: 100vh;
         display: flex;
@@ -124,9 +124,12 @@
 
     /*-----REGISTER-----*/
 
-    .register-bg {
-        height: 100%;
-        width: 100%;
+    .register .vh-100 {
+        all: unset;
+        height: auto !important;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
         background-image: url(assets/register.gif);
     }
 
