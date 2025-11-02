@@ -14,6 +14,15 @@ class CreateUserForm(UserCreationForm): #user creation
         model = User
         fields = ['username', 'email', 'password1', 'password2']
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for f in self.fields.values():
+            f.widget.attrs.update({
+                "class": "form-control form-control-lg",
+                "placeholder": f.label,
+            })
+
 class LoginForm(AuthenticationForm):
 
     username = forms.CharField(widget= TextInput())

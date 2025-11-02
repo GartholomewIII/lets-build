@@ -13,6 +13,7 @@ from django.contrib.auth.models import auth
 
 from django.contrib.auth import authenticate, login, logout
 
+
 def homepage(request):
 
     return render(request, 'app/index.html')
