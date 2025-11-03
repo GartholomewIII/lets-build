@@ -4,3 +4,13 @@
 
 Let’s Build is a Django web app that helps you discover projects aligned with your personality and interests. 
 Take a short quiz → get AI-generated project ideas → follow step-by-step build guides to learn along the way.
+
+### Sign in Examples:
+
+#### Login: 
+
+![login](readme-assets/login.png)
+
+#### Register: 
+
+![login](readme-assets/register.png)
