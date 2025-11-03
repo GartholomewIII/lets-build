@@ -9,6 +9,14 @@ from django.shortcuts import render, redirect
 
 from .forms import CreateUserForm, LoginForm
 
+from django.http import HttpResponse, HttpRequest
+
+from django.db.models import Count
+
+from .models import Quiz, Question, Answer
+
+from django.core.paginator import Paginator
+
 from django.contrib.auth.models import auth
 
 from django.contrib.auth import authenticate, login, logout
@@ -65,6 +73,8 @@ def login(request):
                 auth.login(request, user)
 
                 if user_data.last_login is None:
+                    topics = Quiz.objects.all().annotate(questions_count= Count('question'))
+                    
                     return redirect('quiz')
                 
                 else:
