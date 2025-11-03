@@ -18,6 +18,10 @@ def homepage(request):
 
     return render(request, 'app/index.html')
 
+
+def quiz(request):
+    return render(request, "app/quiz.html")
+
 def register(request):
 
     form = CreateUserForm()
@@ -32,7 +36,7 @@ def register(request):
             
             form.save()
 
-            return redirect('login')
+            return redirect('/')
 
 
     context = {'registerform': form}
@@ -55,11 +59,16 @@ def login(request):
 
             user = authenticate(request, username= username, password= password)
             
-            if user is not None:
+            user_data = form.get_user()
 
+            if user is not None:
                 auth.login(request, user)
 
-                return redirect('dashboard')
+                if user_data.last_login is None:
+                    return redirect('quiz')
+                
+                else:
+                    return redirect('dashboard')
 
     context = {'loginform': form}
 

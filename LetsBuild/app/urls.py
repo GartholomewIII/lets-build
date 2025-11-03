@@ -15,6 +15,8 @@ urlpatterns = [
 
     path("user-logout", views.user_logout, name= "user-logout"),
 
-    path("go-to-register", views.go_to_register, name= "go-to-register")
+    path("go-to-register", views.go_to_register, name= "go-to-register"),
+
+    path("quiz", views.quiz, name= "quiz")
 
 ]
