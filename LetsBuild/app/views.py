@@ -30,7 +30,9 @@ def homepage(request):
 
 
 def quiz(request):
-    return render(request, "app/quiz.html")
+    topics = Quiz.objects.all().annotate(questions_count=Count('question'))
+    print("DEBUG topics count:", topics.count())
+    return render(request, "app/quiz.html", {"topics": topics})
 
 def register(request):
 
@@ -91,7 +93,6 @@ def login(request):
 def get_questions(request, is_start= False) -> HttpResponse:
 
     
-
     if is_start:
         request = _reset_quiz(request)
         question = _get_first_question(request)
@@ -106,7 +107,7 @@ def get_questions(request, is_start= False) -> HttpResponse:
     answers = Answer.objects.filter(question= question)
     request.session['question_id'] = question.id
 
-    return render(request, 'question.html', context= {
+    return render(request, 'app/question.html', context= {
         'question': question, 'answers': answers
     })
 
@@ -145,7 +146,7 @@ def get_answer(request) -> HttpResponse:
         )
 
     return render(
-        request, 'answer.html', context={
+        request, 'app/answer.html', context={
             'submitted_answer': submitted_answer,
             'answer': correct_answer,
         }
@@ -164,7 +165,7 @@ def get_finish(request) -> HttpResponse:
     request = _reset_quiz(request)
 
 
-    return render(request, 'finish.html', context= {
+    return render(request, 'app/finish.html', context= {
         'questions_count': questions_count, 'score': score, 'percent_score': percent
     })
 
