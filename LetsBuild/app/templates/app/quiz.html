@@ -89,7 +89,7 @@
   </head>
  
   <body>
-    <form id="topic-container" hx-post="{% url 'get-questions' %}/start">
+    <form id="topic-container" hx-post="{% url 'get-questions' %}">
       {% csrf_token %}
       <h2 id="heading-text">What would you like to learn about?</h2>
       <div id="topic-list">

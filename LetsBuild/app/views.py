@@ -90,6 +90,8 @@ def login(request):
 
 def get_questions(request, is_start= False) -> HttpResponse:
 
+    
+
     if is_start:
         request = _reset_quiz(request)
         question = _get_first_question(request)
