@@ -1,14 +1,14 @@
 <div>
   <p>Quiz complete. You scored {{ percent_score }}%</p>
   <p>({{ score }} correct / {{ questions_count }} questions)</p>
- 
+
   <a class="btn" href="{% url 'quiz' %}"> Start another quiz </a>
 </div>
 Create a file question.html in the partials folder, containing:
 <div>
   <form id="question-form" hx-post="{% url 'get-answer' %}">
     {% csrf_token %}
- 
+
     <h2 id="heading-text">{{ question.text }}</h2>
  
     <ol style="list-style-type: none;">
@@ -25,11 +25,11 @@ Create a file question.html in the partials folder, containing:
       </li>
       {% endfor %}
     </ol>
- 
+
     <button class="btn" type="submit">Submit your answer</button>
   </form>
 </div>
- 
+
 <script>
   window.onbeforeunload = function () {
     return 'Are you sure you want to leave? You will lose your progress.'

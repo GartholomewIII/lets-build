@@ -1,8 +1,10 @@
 <!doctype html>
 <html lang="en">
+{% load static %}
   <head>
     <meta charset="UTF-8" />
     <title>Start your quiz</title>
+    <link rel="stylesheet" href="{% static 'login.css' %}">
     <script
       src="https://unpkg.com/htmx.org@1.9.10"
       integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
@@ -82,28 +84,27 @@
         margin: 20px auto;
       }
  
-      .btn:hover {
+        .btn:hover {
         background-color: #0056b3;
       }
     </style>
-  </head>
- 
-  <body>
+</head> 
+<body>
     <form id="topic-container" hx-post="{% url 'get-questions' %}">
-      {% csrf_token %}
-      <h2 id="heading-text">What would you like to learn about?</h2>
-      <div id="topic-list">
+        {% csrf_token %}
+        <h2 id="heading-text">What would you like to learn about?</h2>
+        <div id="topic-list">
         <p>Please pick a topic from the below topics</p>
- 
+
         <ol style="list-style-type: none;">
-          {% for topic in topics %}
-          <li class="option">
+        {% for topic in topics %}
+        <li class="option">
             <input
-              type="radio"
-              id="topic-{{ forloop.counter0 }}"
-              value="{{ topic.id }}"
-              name="quiz_id"
-              required
+                type="radio"
+                id="topic-{{ forloop.counter0 }}"
+                value="{{ topic.id }}"
+                name="quiz_id"
+                required
             />
             <label for="topic-{{ forloop.counter0 }}"
               >{{ topic.name }} ({{ topic.questions_count }} questions)</label
