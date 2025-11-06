@@ -135,6 +135,11 @@ def get_answer(request) -> HttpResponse:
     submitted_answer = Answer.objects.get(id= submitted_answer_id)
 
 
+    if next_question is None:
+        # Make sure the last question is still in session for get_finish
+        request.session['question_id'] = previous_question_id
+        return get_finish(request)
+        
     if submitted_answer.is_correct:
 
         correct_answer = submitted_answer

@@ -1,24 +1,28 @@
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); 
+    grid-template-columns: repeat(5, 1fr); 
     place-items: center;
     gap: 10px; 
     margin: 20px auto;
     border: 1px solid #ccc;
     padding: 10px;
+    width: 40%;
+
 }
 
-.grid-box {
-    background-color: #000000;
-    padding: 20px;
+.grid-container div {
+
     text-align: center;
-    border: 1px solid #ddd;
+    border: 1px solid #000000;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 8px;
     aspect-ratio: 1 / 1;
-    width: 75%;
+    width:100%;
 }
 
+.grid-container div h1 {
+    font-size: small;
+}
 .grid-item.selected {
     background-color: #a0d9b4; /* Highlight color for selected items */
     border-color: #4CAF50;
