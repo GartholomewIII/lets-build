@@ -6,12 +6,12 @@
     margin: 20px auto;
     border: 1px solid #ccc;
     padding: 10px;
-    width: 40%;
+    width: 100%;
 
 }
 
 .grid-container div {
-
+    transition: transform 0.2s ease-in-out;
     text-align: center;
     border: 1px solid #000000;
     cursor: pointer;
@@ -20,8 +20,12 @@
     width:100%;
 }
 
+.grid-container div:hover {
+    transform: scale(1.1);
+}
+
 .grid-container div h1 {
-    font-size: small;
+    font-size: xx-small;
 }
 .grid-item.selected {
     background-color: #a0d9b4; /* Highlight color for selected items */

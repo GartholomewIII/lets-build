@@ -131,48 +131,65 @@ def _get_subsequent_question(request) -> Optional[Question]:
 
 def get_answer(request) -> HttpResponse:
 
+
     submitted_answer_id = request.POST['answer_id']
-    submitted_answer = Answer.objects.get(id= submitted_answer_id)
+    submitted_answer = Answer.objects.get(id=submitted_answer_id)
+
+
+    responses = request.session.get('responses', [])
+    responses.append(submitted_answer.id)
+    request.session['responses'] = responses
+
+
+    current_question = submitted_answer.question
+    quiz = current_question.quiz
+
+
+    next_question = (
+        Question.objects
+        .filter(quiz=quiz, id__gt=current_question.id)
+        .order_by('id')
+        .first()
+    )
 
 
     if next_question is None:
-        # Make sure the last question is still in session for get_finish
-        request.session['question_id'] = previous_question_id
+        request.session['question_id'] = current_question.id
         return get_finish(request)
-        
-    if submitted_answer.is_correct:
 
-        correct_answer = submitted_answer
-        request.session['score'] = request.session.get('score', 0) + 1
-
-    else:
-        correct_answer = Answer.objects.get(
-            question_id= submitted_answer.question_id, is_correct= True
-        )
+    
+    request.session['question_id'] = next_question.id
+    answers = Answer.objects.filter(question=next_question)
 
     return render(
-        request, 'app/answer.html', context={
-            'submitted_answer': submitted_answer,
-            'answer': correct_answer,
-        }
+        request,
+        'app/question.html',
+        {'question': next_question, 'answers': answers},
     )
 
 def get_finish(request) -> HttpResponse:
+    
+    quiz_id = request.session.get('quiz_id')
 
-    quiz = Question.objects.get(id= request.session['question_id']).quiz
+    if quiz_id:
+        questions_count = Question.objects.filter(quiz_id=quiz_id).count()
+    else:
+        questions_count = 0
 
-    questions_count = Question.objects.filter(quiz=quiz).count()
+    responses = request.session.get('responses', [])
+    responses_count = len(responses)
 
-    score = request.session.get('score', 0)
-
-    percent = int(score / questions_count * 100)
-
+    # Clean up session
     request = _reset_quiz(request)
 
-
-    return render(request, 'app/finish.html', context= {
-        'questions_count': questions_count, 'score': score, 'percent_score': percent
-    })
+    return render(
+        request,
+        'app/interests.html',
+        {
+            'questions_count': questions_count,
+            'responses_count': responses_count,
+        }
+    )
 
 def _reset_quiz(request) -> HttpRequest:
 
