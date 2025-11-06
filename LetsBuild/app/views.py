@@ -195,3 +195,5 @@ def go_to_register(request):
 
     return redirect("register")
 
+def get_interests(request):
+    return render(request, 'app/interests.html')

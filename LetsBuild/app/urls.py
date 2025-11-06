@@ -27,4 +27,6 @@ urlpatterns = [
 
     path('get-finish', views.get_finish, name='get-finish'),
 
+    path('interests', views.get_interests, name='interests' )
+
 ]

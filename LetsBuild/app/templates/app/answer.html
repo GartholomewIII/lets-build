@@ -26,7 +26,7 @@
  
   <button class="btn">Next question</button>
 </form>
-Create a file finish.html in the partials folder, containing:
+
 <div>
   <p>Quiz complete. You scored {{ percent_score }}%</p>
   <p>({{ score }} correct / {{ questions_count }} questions)</p>
@@ -44,11 +44,11 @@ Create a file question.html in the partials folder, containing:
       {% for answer in answers %}
       <li class="option">
         <input
-          type="radio"
-          id="answer-{{ forloop.counter0 }}"
-          value="{{ answer.id }}"
-          name="answer_id"
-          required
+            type="radio"
+            id="answer-{{ forloop.counter0 }}"
+            value="{{ answer.id }}"
+            name="answer_id"
+            required
         />
         <label for="answer-{{ forloop.counter0 }}">{{ answer.text }}</label>
       </li>

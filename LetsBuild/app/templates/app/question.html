@@ -10,7 +10,7 @@ Create a file question.html in the partials folder, containing:
     {% csrf_token %}
 
     <h2 id="heading-text">{{ question.text }}</h2>
-
+    
     <ol style="list-style-type: none;">
       {% for answer in answers %}
       <li class="option">
