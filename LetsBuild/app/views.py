@@ -13,7 +13,7 @@ from django.http import HttpResponse, HttpRequest
 
 from django.db.models import Count
 
-from .models import Quiz, Question, Answer
+from .models import Quiz, Question, Answer, SurveyAnswer, SurveySubmission
 
 from django.core.paginator import Paginator
 
@@ -31,7 +31,7 @@ def homepage(request):
 
 def quiz(request):
     topics = Quiz.objects.all().annotate(questions_count=Count('question'))
-    print("DEBUG topics count:", topics.count())
+    
     return render(request, "app/quiz.html", {"topics": topics})
 
 def register(request):
@@ -97,6 +97,13 @@ def get_questions(request, is_start= False) -> HttpResponse:
         request = _reset_quiz(request)
         question = _get_first_question(request)
 
+        submission = SurveySubmission.objects.create(
+            user= request.user if request.user.is_authenticated else None,
+            quiz= question.quiz
+        )
+
+        request.session['submission_id'] = submission.id
+
     else:
         question = _get_subsequent_question(request)
 
@@ -133,18 +140,32 @@ def get_answer(request) -> HttpResponse:
 
 
     submitted_answer_id = request.POST['answer_id']
-    submitted_answer = Answer.objects.get(id=submitted_answer_id)
-
-
-    responses = request.session.get('responses', [])
-    responses.append(submitted_answer.id)
-    request.session['responses'] = responses
-
+    submitted_answer = Answer.objects.select_related('question', 'question__quiz').get(
+        id=submitted_answer_id
+    )
 
     current_question = submitted_answer.question
     quiz = current_question.quiz
 
+    
+    submission_id = request.session.get('submission_id')
+    if submission_id is None:
+        submission = SurveySubmission.objects.create(
+            user=request.user if request.user.is_authenticated else None,
+            quiz=quiz,
+        )
+        request.session['submission_id'] = submission.id
+    else:
+        submission = SurveySubmission.objects.get(id=submission_id)
 
+    
+    SurveyAnswer.objects.create(
+        submission=submission,
+        question=current_question,
+        answer=submitted_answer,
+    )
+
+    
     next_question = (
         Question.objects
         .filter(quiz=quiz, id__gt=current_question.id)
@@ -152,19 +173,25 @@ def get_answer(request) -> HttpResponse:
         .first()
     )
 
-
+    
     if next_question is None:
+        
         request.session['question_id'] = current_question.id
         return get_finish(request)
 
     
     request.session['question_id'] = next_question.id
+    request.session['quiz_id'] = quiz.id  
+
     answers = Answer.objects.filter(question=next_question)
 
     return render(
         request,
-        'app/question.html',
-        {'question': next_question, 'answers': answers},
+        'app/question.html',   
+        {
+            'question': next_question,
+            'answers': answers,
+        },
     )
 
 def get_finish(request) -> HttpResponse:
@@ -219,3 +246,4 @@ def go_to_register(request):
 
 def get_interests(request):
     return render(request, 'app/interests.html')
+
