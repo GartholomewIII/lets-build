@@ -1,6 +1,11 @@
+'''
+Author: Quinn (Gigawttz)
+
+What it Does: Creates user object that data is recorded into
+'''
 from django.db import models
 from django.conf import settings
-# Create your models here.
+
 
 class Quiz(models.Model):
     name = models.CharField(max_length=300)
@@ -39,4 +44,4 @@ class SurveyAnswer(models.Model):
     answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add= True)
 
-    
+

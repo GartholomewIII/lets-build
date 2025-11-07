@@ -159,7 +159,6 @@ def _get_subsequent_question(request) -> Optional[Question]:
 
 def get_answer(request) -> HttpResponse:
 
-    # 1. Get which answer the user picked
     submitted_answer_id = request.POST['answer_id']
     submitted_answer = Answer.objects.select_related('question', 'question__quiz').get(
         id=submitted_answer_id
@@ -168,10 +167,9 @@ def get_answer(request) -> HttpResponse:
     current_question = submitted_answer.question
     quiz = current_question.quiz
 
-    # 2. Get the current SurveySubmission
     submission_id = request.session.get('submission_id')
     if submission_id is None:
-        # Fallback: if somehow missing, create a new submission
+        
         submission = SurveySubmission.objects.create(
             user=request.user if request.user.is_authenticated else None,
             quiz=quiz,
@@ -180,16 +178,12 @@ def get_answer(request) -> HttpResponse:
     else:
         submission = SurveySubmission.objects.get(id=submission_id)
 
-    # 3. Save this answer in the DB
     SurveyAnswer.objects.create(
         submission=submission,
         question=current_question,
         answer=submitted_answer,
     )
 
-    # 4. Hand control back to get_questions to get the next question
-    #    (is_start=False -> uses _get_subsequent_question and then either
-    #    renders question.html or goes to get_finish)
     return get_questions(request, is_start=False)
 
 def get_finish(request) -> HttpResponse:
@@ -204,7 +198,7 @@ def get_finish(request) -> HttpResponse:
     responses = request.session.get('responses', [])
     responses_count = len(responses)
 
-    # Clean up session
+
     request = _reset_quiz(request)
 
     return render(
