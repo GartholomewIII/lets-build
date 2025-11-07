@@ -92,40 +92,61 @@ def login(request):
 
 def get_questions(request, is_start= False) -> HttpResponse:
 
-    
     if is_start:
+
         request = _reset_quiz(request)
         question = _get_first_question(request)
 
+
         submission = SurveySubmission.objects.create(
-            user= request.user if request.user.is_authenticated else None,
-            quiz= question.quiz
+            user=request.user if request.user.is_authenticated else None,
+            quiz=question.quiz,
         )
-
         request.session['submission_id'] = submission.id
-
     else:
+ 
         question = _get_subsequent_question(request)
 
         if question is None:
 
             return get_finish(request)
 
-    answers = Answer.objects.filter(question= question)
+
     request.session['question_id'] = question.id
 
-    return render(request, 'app/question.html', context= {
-        'question': question, 'answers': answers
-    })
+    answers = Answer.objects.filter(question=question)
+
+    return render(
+        request,
+        'app/question.html',  
+        {
+            'question': question,
+            'answers': answers,
+        },
+    )
 
 def _get_first_question(request) -> Question:
-
     quiz_id = request.POST['quiz_id']
-    return Question.objects.filter(quiz_id= quiz_id).order_by('id').first()
+
+    
+    request.session['quiz_id'] = int(quiz_id)
+
+    return (
+        Question.objects
+        .filter(quiz_id=quiz_id)
+        .order_by('id')
+        .first()
+    )
 
 def _get_subsequent_question(request) -> Optional[Question]:
-    quiz_id = request.POST['quiz_id']
+    quiz_id = request.session['quiz_id']
     previous_question_id = request.session['question_id']
+
+    return (
+        Question.objects
+        .filter(quiz_id=quiz_id, id__gt=previous_question_id)
+        .order_by('id')
+        .first())
 
 
     try:
@@ -138,7 +159,7 @@ def _get_subsequent_question(request) -> Optional[Question]:
 
 def get_answer(request) -> HttpResponse:
 
-
+    # 1. Get which answer the user picked
     submitted_answer_id = request.POST['answer_id']
     submitted_answer = Answer.objects.select_related('question', 'question__quiz').get(
         id=submitted_answer_id
@@ -147,9 +168,10 @@ def get_answer(request) -> HttpResponse:
     current_question = submitted_answer.question
     quiz = current_question.quiz
 
-    
+    # 2. Get the current SurveySubmission
     submission_id = request.session.get('submission_id')
     if submission_id is None:
+        # Fallback: if somehow missing, create a new submission
         submission = SurveySubmission.objects.create(
             user=request.user if request.user.is_authenticated else None,
             quiz=quiz,
@@ -158,41 +180,17 @@ def get_answer(request) -> HttpResponse:
     else:
         submission = SurveySubmission.objects.get(id=submission_id)
 
-    
+    # 3. Save this answer in the DB
     SurveyAnswer.objects.create(
         submission=submission,
         question=current_question,
         answer=submitted_answer,
     )
 
-    
-    next_question = (
-        Question.objects
-        .filter(quiz=quiz, id__gt=current_question.id)
-        .order_by('id')
-        .first()
-    )
-
-    
-    if next_question is None:
-        
-        request.session['question_id'] = current_question.id
-        return get_finish(request)
-
-    
-    request.session['question_id'] = next_question.id
-    request.session['quiz_id'] = quiz.id  
-
-    answers = Answer.objects.filter(question=next_question)
-
-    return render(
-        request,
-        'app/question.html',   
-        {
-            'question': next_question,
-            'answers': answers,
-        },
-    )
+    # 4. Hand control back to get_questions to get the next question
+    #    (is_start=False -> uses _get_subsequent_question and then either
+    #    renders question.html or goes to get_finish)
+    return get_questions(request, is_start=False)
 
 def get_finish(request) -> HttpResponse:
     
