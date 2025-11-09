@@ -104,7 +104,6 @@ def get_questions(request, is_start= False) -> HttpResponse:
         )
         request.session['submission_id'] = submission.id
     else:
- 
         question = _get_subsequent_question(request)
 
         if question is None:
