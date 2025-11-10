@@ -1,4 +1,3 @@
-from app.models import SurveySubmission, SurveyAnswer
 import os
 import sys 
 import django
@@ -33,8 +32,13 @@ def get_latest_submission_with_answers():
     return submission, list(answers)
 
 
+
+
+
 if __name__ == '__main__':
 
     _setup_django()
 
-    get_latest_submission_with_answers()
+    from app.models import SurveySubmission, SurveyAnswer
+
+    print(get_latest_submission_with_answers())

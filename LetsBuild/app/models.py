@@ -31,6 +31,10 @@ class SurveySubmission(models.Model):
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add= True)
 
+    def __str__(self):
+
+        return f'Submission Number {self.id} for quiz {self.quiz.name}'
+
 
 class SurveyAnswer(models.Model):
 
@@ -43,5 +47,9 @@ class SurveyAnswer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add= True)
+    
 
+    def __str__(self):
+
+        return f'Q: {self.question.text} A: {self.answer.text}'
 
