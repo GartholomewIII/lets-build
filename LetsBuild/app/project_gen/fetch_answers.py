@@ -25,11 +25,13 @@ def _convert_to_LLM_text(data):
 
         {answer_json}
 
-        Using this data, suggest 3 concrete project ideas that match their interests and aptitude.
-        For each project, include:
-        - title
-        - short description
-        - difficulty (Beginner / Intermediate / Advanced)
+        Using this data, suggest 5 projects for the user, for each project please provide at least 5 steps in reaching that goal, they can be broad
+        but easy to figure out on your own or learn. The purpose of this project is to provide fun projects that makes programming more fun.
+
+        Format the output like this:
+
+        create an array of dicts, with each dict representing one project, in each project dict you will have these keys: project_name, difficulty, areas_of_focus and list_of_steps which will have a value of an array with the chosen steps to reach project creation
+
         """
 
     return prompt
@@ -56,6 +58,18 @@ def get_logged_in_prompt(user): #pass through user obj to peek at data
     return _convert_to_LLM_text(answers_data) 
 
 
+def get_project_recs(prompt):
+
+    llm = ChatOllama(
+        model="llama3.2:1b",
+    )
+
+
+    ai_msg = llm.invoke(prompt)
+
+    return ai_msg
+
+
 if __name__ == '__main__':
     
     _setup_django()
@@ -64,16 +78,9 @@ if __name__ == '__main__':
     from django.contrib.auth import get_user_model
 
     User = get_user_model()
-
-    # Pick a user to test with (adjust username)
     user = User.objects.get(username="quinn")
 
     prompt = get_logged_in_prompt(user)
+    ai_msg = get_project_recs(prompt)
 
-    llm = ChatOllama(
-        model="llama3.2:1b",
-    )
-
-
-    ai_msg = llm.invoke(prompt)
     print(ai_msg.content)
