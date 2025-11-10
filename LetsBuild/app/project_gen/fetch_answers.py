@@ -3,6 +3,8 @@ import sys
 import django
 import json
 
+from langchain_ollama import ChatOllama
+
 #Priv function allows for testing as a script
 def _setup_django(): # Accesses the root directory project_gen -> app -> LetsBuild -> Root
     BASE_DIRECTORY = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -12,55 +14,16 @@ def _setup_django(): # Accesses the root directory project_gen -> app -> LetsBui
 
     django.setup()
 
-def get_latest_submission_with_answers():
-    
-    submission = (
-        SurveySubmission.objects
-        .order_by('-created_at')
-        .select_related('quiz')
-        .first()
-    )
-    
-    if submission is None:
-        return None, []
+def _convert_to_LLM_text(data):
 
-    answers = (
-        SurveyAnswer.objects
-        .filter(submission=submission)
-        .select_related('question', 'answer')
-    )
-
-    
-    return submission, list(answers)
-    
-
-
-
-
-if __name__ == '__main__':
-    
-    _setup_django()
-
-    from app.models import SurveySubmission, SurveyAnswer
-
-    submission = SurveySubmission.objects.order_by('-created_at').first()
-
-    answers_data = SurveyAnswer.get_answers_for_submission(submission)
-    
-    answers_json = json.dumps(answers_data, indent=2)
-
-    from langchain_ollama import ChatOllama
-
-    llm = ChatOllama(
-        model="llama3.2:1b",
-    )
+    answer_json = json.dumps(data, indent=2)
 
     prompt = f"""
         You are an AI that recommends software development projects.
 
         Here is a JSON array of the user's survey answers:
 
-        {answers_json}
+        {answer_json}
 
         Using this data, suggest 3 concrete project ideas that match their interests and aptitude.
         For each project, include:
@@ -68,6 +31,49 @@ if __name__ == '__main__':
         - short description
         - difficulty (Beginner / Intermediate / Advanced)
         """
-        
+
+    return prompt
+
+
+def get_logged_in_prompt(user): #pass through user obj to peek at data
+    if not user.is_authenticated:
+        return
+
+    #last submission (should be only one after logged in)
+    submission = (
+        SurveySubmission.objects
+        .filter(user=user)
+        .order_by('-created_at')
+        .first()
+    )
+
+    if submission is None:
+        return []
+
+    # Get their answers as dicts
+    answers_data = SurveyAnswer.get_answers_for_submission(submission)
+
+    return _convert_to_LLM_text(answers_data) 
+
+
+if __name__ == '__main__':
+    
+    _setup_django()
+
+    from app.models import SurveySubmission, SurveyAnswer
+    from django.contrib.auth import get_user_model
+
+    User = get_user_model()
+
+    # Pick a user to test with (adjust username)
+    user = User.objects.get(username="quinn")
+
+    prompt = get_logged_in_prompt(user)
+
+    llm = ChatOllama(
+        model="llama3.2:1b",
+    )
+
+
     ai_msg = llm.invoke(prompt)
     print(ai_msg.content)
