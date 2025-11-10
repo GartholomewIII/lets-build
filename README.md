@@ -22,3 +22,13 @@ learned.
 #### Register: 
 
 ![login](readme-assets/register.png)
+
+### Quiz Examples:
+
+#### Quiz Entry:
+
+![login](readme-assets/quiz-example.png)
+
+### Quiz Questions:
+
+![login](readme-assets/question-example.png)

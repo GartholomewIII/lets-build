@@ -15,9 +15,9 @@
 <body>
     <form id="topic-container" hx-post="{% url 'get-questions' %}">
         {% csrf_token %}
-        <h2 id="heading-text">What would you like to learn about?</h2>
+        <h2 id="heading-text">Tell Us About Yourself</h2>
         <div id="topic-list">
-        <p>Please pick a topic from the below topics</p>
+        <p>Please select the quiz below to begin your aptitude assessment</p>
 
         <ol style="list-style-type: none;">
         {% for topic in topics %}
