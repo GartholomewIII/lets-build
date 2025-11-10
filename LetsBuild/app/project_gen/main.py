@@ -19,7 +19,7 @@ def get_latest_submission_with_answers():
         .select_related('quiz')
         .first()
     )
-
+    
     if submission is None:
         return None, []
 
@@ -29,8 +29,9 @@ def get_latest_submission_with_answers():
         .select_related('question', 'answer')
     )
 
+    
     return submission, list(answers)
-
+    
 
 
 
@@ -41,4 +42,8 @@ if __name__ == '__main__':
 
     from app.models import SurveySubmission, SurveyAnswer
 
-    print(get_latest_submission_with_answers())
+    submission = SurveySubmission.objects.order_by('-created_at').first()
+
+    answers_data = SurveyAnswer.get_answers_for_submission(submission)
+
+    print(answers_data)
