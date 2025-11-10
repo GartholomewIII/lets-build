@@ -1,12 +1,15 @@
-
-
 from app.models import SurveySubmission, SurveyAnswer
 import os
+import sys 
 import django
 
+#Priv function allows for testing as a script
+def _setup_django(): # Accesses the root directory project_gen -> app -> LetsBuild -> Root
+    BASE_DIRECTORY = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    sys.path.append(BASE_DIRECTORY)
 
-def setup_django():
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "LetsBuild.settings")
+
     django.setup()
 
 def get_latest_submission_with_answers():
@@ -31,4 +34,7 @@ def get_latest_submission_with_answers():
 
 
 if __name__ == '__main__':
+
+    _setup_django()
+
     get_latest_submission_with_answers()
