@@ -25,13 +25,14 @@ def _convert_to_LLM_text(data):
 
         {answer_json}
 
-        Using this data, suggest 5 projects for the user, for each project please provide at least 5 steps in reaching that goal, they can be broad
+        Using this data, suggest 3 projects for the user, for each project please provide at least 5 steps in reaching that goal, they can be broad
         but easy to figure out on your own or learn. The purpose of this project is to provide fun projects that makes programming more fun.
 
         Format the output like this:
 
         create an array of dicts, with each dict representing one project, in each project dict you will have these keys: project_name, difficulty, areas_of_focus and list_of_steps which will have a value of an array with the chosen steps to reach project creation
 
+        IMPORTANT OUTPUT GUIDLINES: DO NOT RETURN ANYTHING BESIDES THE ARRAY OF DICTS SO I CAN BETTER PARSE THE DATA
         """
 
     return prompt
