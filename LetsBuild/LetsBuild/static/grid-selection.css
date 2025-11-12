@@ -31,3 +31,11 @@
     background-color: #a0d9b4; /* Highlight color for selected items */
     border-color: #4CAF50;
 }
+
+
+.grid-box {
+    background-image: url(assets/icons/basketball.png);
+    background-size: cover;
+    background-position: center; 
+    background-repeat: no-repeat;
+}
