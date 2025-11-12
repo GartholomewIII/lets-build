@@ -76,9 +76,56 @@
     background-repeat: no-repeat;
 }
 .grid-box-8 {
-    background-image: url(assets/icons/rook.png);
+    background-image: url(assets/icons/dna.png);
     background-size: calc(100% - 20px) calc(100% - 20px);
     background-position: center; 
     background-repeat: no-repeat;
 }
-
+.grid-box-9 {
+    background-image: url(assets/icons/football.png);
+    background-size: calc(100% - 20px) calc(100% - 20px);
+    background-position: center; 
+    background-repeat: no-repeat;
+}
+.grid-box-10 {
+    background-image: url(assets/icons/paint-palette.png);
+    background-size: calc(100% - 20px) calc(100% - 20px);
+    background-position: center; 
+    background-repeat: no-repeat;
+}
+.grid-box-11 {
+    background-image: url(assets/icons/galaxy.png);
+    background-size: calc(100% - 20px) calc(100% - 20px);
+    background-position: center; 
+    background-repeat: no-repeat;
+}
+.grid-box-12 {
+    background-image: url(assets/icons/graph.png);
+    background-size: calc(100% - 20px) calc(100% - 20px);
+    background-position: center; 
+    background-repeat: no-repeat;
+}
+.grid-box-13 {
+    background-image: url(assets/icons/volcano.png);
+    background-size: calc(100% - 20px) calc(100% - 20px);
+    background-position: center; 
+    background-repeat: no-repeat;
+}
+.grid-box-14 {
+    background-image: url(assets/icons/writing.png);
+    background-size: calc(100% - 20px) calc(100% - 20px);
+    background-position: center; 
+    background-repeat: no-repeat;
+}
+.grid-box-15 {
+    background-image: url(assets/icons/function.png);
+    background-size: calc(100% - 20px) calc(100% - 20px);
+    background-position: center; 
+    background-repeat: no-repeat;
+}
+.grid-box-16 {
+    background-image: url(assets/icons/american-football.png);
+    background-size: calc(100% - 20px) calc(100% - 20px);
+    background-position: center; 
+    background-repeat: no-repeat;
+}
