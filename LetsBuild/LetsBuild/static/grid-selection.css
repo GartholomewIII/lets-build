@@ -1,3 +1,10 @@
+body {
+    font-family: "Playfair Display", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+
+
 .grid-container {
     display: grid;
     grid-template-columns: repeat(5, 1fr); 
@@ -10,6 +17,13 @@
 
 }
 
+
+.header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .grid-container div {
     transition: transform 0.2s ease-in-out;
     text-align: center;
