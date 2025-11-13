@@ -143,3 +143,57 @@ body {
     background-position: center; 
     background-repeat: no-repeat;
 }
+.grid-box-17 {
+    background-image: url(assets/icons/briefcase.png);
+    background-size: calc(100% - 20px) calc(100% - 20px);
+    background-position: center; 
+    background-repeat: no-repeat;
+}
+.grid-box-18 {
+    background-image: url(assets/icons/car.png);
+    background-size: calc(100% - 20px) calc(100% - 20px);
+    background-position: center; 
+    background-repeat: no-repeat;
+}
+.grid-box-19 {
+    background-image: url(assets/icons/cyber-security.png);
+    background-size: calc(100% - 20px) calc(100% - 20px);
+    background-position: center; 
+    background-repeat: no-repeat;
+}
+.grid-box-20 {
+    background-image: url(assets/icons/medical-research.png);
+    background-size: calc(100% - 20px) calc(100% - 20px);
+    background-position: center; 
+    background-repeat: no-repeat;
+}
+.grid-box-21 {
+    background-image: url(assets/icons/network.png);
+    background-size: calc(100% - 20px) calc(100% - 20px);
+    background-position: center; 
+    background-repeat: no-repeat;
+}
+.grid-box-22 {
+    background-image: url(assets/icons/soldering.png);
+    background-size: calc(100% - 20px) calc(100% - 20px);
+    background-position: center; 
+    background-repeat: no-repeat;
+}
+.grid-box-23 {
+    background-image: url(assets/icons/theater.png);
+    background-size: calc(100% - 20px) calc(100% - 20px);
+    background-position: center; 
+    background-repeat: no-repeat;
+}
+.grid-box-24 {
+    background-image: url(assets/icons/weight.png);
+    background-size: calc(100% - 20px) calc(100% - 20px);
+    background-position: center; 
+    background-repeat: no-repeat;
+}
+.grid-box-26 {
+    background-image: url(assets/icons/world.png);
+    background-size: calc(100% - 20px) calc(100% - 20px);
+    background-position: center; 
+    background-repeat: no-repeat;
+}
