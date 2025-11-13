@@ -34,19 +34,19 @@ body {
     width:100%;
 }
 
-.grid-container div:hover {
+.grid-container div:hover, .grid-container div.selected {
     transform: scale(1.1);
+    box-shadow: 0 8px 24px rgba(0,0,0,.15);
 }
 
 .grid-container div h1 {
     font-size: xx-small;
 }
-.grid-item.selected {
-    background-color: #a0d9b4; /* Highlight color for selected items */
-    border-color: #4CAF50;
-}
 
+@keyframes shake { 10%, 90% {transform: translateX(-1px);} 20%, 80% {transform: translateX(2px);} 30%, 50%, 70% {transform: translateX(-4px);} 40%, 60% {transform: translateX(4px);} }
+.grid-container [data-id].limit-hit { animation: shake .25s; }
 
+/* IMAGE STYLING */
 .grid-box-1 {
     background-image: url(assets/icons/basketball.png);
     background-size: cover;
