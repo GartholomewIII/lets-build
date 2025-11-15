@@ -16,34 +16,37 @@
     <script src="{% static 'interactivity.js' %}" defer></script>
 </head> 
 <body>
-    <form id="topic-container" hx-post="{% url 'get-questions' %}">
-        {% csrf_token %}
-        <h2 id="heading-text">Tell Us About Yourself</h2>
-        <div id="topic-list">
-        <p>Please select the quiz below to begin your aptitude assessment</p>
+    <div class="quiz-container">
+        <form id="topic-container" hx-post="{% url 'get-questions' %}">
+            <div class="content-box">
+                {% csrf_token %}
+                <h2 id="heading-text">Tell Us About Yourself</h2>
+                <div id="topic-list">
+                <p>Please select the quiz below to begin your aptitude assessment</p>
 
-        <ol style="list-style-type: none;">
-        {% for topic in topics %}
-        <li class="option">
-            <input
-                type="radio"
-                id="topic-{{ forloop.counter0 }}"
-                value="{{ topic.id }}"
-                name="quiz_id"
-                required
-            />
-            <label for="topic-{{ forloop.counter0 }}">{{ topic.name }} ({{ topic.questions_count }} questions)</label>
-            </li>
-            {% endfor %} {% if not topics %}
-            <li>
+                <ol style="list-style-type: none;">
+                {% for topic in topics %}
+                <li class="option">
+                    <input
+                        type="radio"
+                        id="topic-{{ forloop.counter0 }}"
+                        value="{{ topic.id }}"
+                        name="quiz_id"
+                        required
+                    />
+                    <label for="topic-{{ forloop.counter0 }}">{{ topic.name }} ({{ topic.questions_count }} questions)</label>
+                    </li>
+                    {% endfor %} {% if not topics %}
+                    <li>
 
-            </li>
-            {% endif %}
-        </ol>
+                    </li>
+                    {% endif %}
+                </ol>
 
-            <button class="btn" type="submit">Start your quiz</button>
-        </div>
-    </form>
-
+                    <button class="btn" type="submit">Start your quiz</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </body>
 </html>

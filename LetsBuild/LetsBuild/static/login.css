@@ -30,9 +30,9 @@
     }
 
     .login {
-        width: 100%;
-        height: 100%;
-        background-image: url(assets/login-bg-inverted.gif);
+        background-image: url('/static/assets/login-bg-inverted.gif');
+        background-position: bottom center; 
+
     }
 
 

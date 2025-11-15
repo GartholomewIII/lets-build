@@ -29,13 +29,17 @@
         background-color: rgb(0, 0, 0)
     }
 
+    .register {
+        background-image: url(assets/register.gif);
+        background-position: bottom center;
+    }
+
     .register .vh-100 {
         all: unset;
         height: auto !important;
         min-height: 100vh;
         display: flex;
         align-items: center;
-        background-image: url(assets/register.gif);
     }
 
     .register p {
