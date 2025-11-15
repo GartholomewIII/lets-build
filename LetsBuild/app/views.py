@@ -145,7 +145,7 @@ def get_questions(request, is_start= False) -> HttpResponse:
 
         if question is None:
 
-            return get_finish(request)
+            return get_interests(request)
 
 
     request.session['question_id'] = question.id

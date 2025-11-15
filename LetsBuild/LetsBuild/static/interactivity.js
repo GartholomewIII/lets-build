@@ -1,78 +1,81 @@
+// interactivity.js
+console.log('interactivity.js loaded');
 
-document.addEventListener('DOMContentLoaded', () => {
-  const container = document.querySelector('.grid-container');
-  const max = 5;
-  const selected = new Set();
-  const csvInput = document.querySelector('#interests-input');
+(function () {
+  const MAX = 5;
 
-  // Make boxes keyboard-accessible
-  container.querySelectorAll('[data-id]').forEach(box => {
-    box.setAttribute('tabindex', '0');
-    box.setAttribute('role', 'button');
-    box.setAttribute('aria-pressed', 'false');
-  });
+  function bind(container) {
+    if (!container || container.dataset.interestsBound === '1') return;
+    container.dataset.interestsBound = '1';
 
-  container.addEventListener('click', onToggle);
-  container.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
+    const form = container.closest('form');
+    const csvInput = form ? form.querySelector('#interests-input') : null;
+    const selected = new Set();
+
+    container.querySelectorAll('[data-id]').forEach(box => {
+      box.tabIndex = 0;
+      box.setAttribute('role', 'button');
+      box.setAttribute('aria-pressed', 'false');
+    });
+
+    container.addEventListener('click', (e) => {
       const box = e.target.closest('[data-id]');
-      if (box && container.contains(box)) {
-        e.preventDefault();
-        toggleBox(box);
+      if (box) toggle(box);
+    });
+
+    container.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      const box = e.target.closest('[data-id]');
+      if (!box) return;
+      e.preventDefault();
+      toggle(box);
+    });
+
+    function toggle(box) {
+      const id = box.dataset.id;
+      if (box.classList.contains('selected')) {
+        box.classList.remove('selected');
+        box.setAttribute('aria-pressed', 'false');
+        selected.delete(id);
+        sync();
+        return;
+      }
+      if (selected.size >= MAX) {
+        box.classList.add('limit-hit');
+        setTimeout(() => box.classList.remove('limit-hit'), 250);
+        return;
+      }
+      box.classList.add('selected');
+      box.setAttribute('aria-pressed', 'true');
+      selected.add(id);
+      sync();
+    }
+
+    function sync() {
+      if (csvInput) csvInput.value = Array.from(selected).join(',');
+      if (!form) return;
+
+      form.querySelectorAll('input[name="interests[]"]').forEach(n => n.remove());
+      for (const id of selected) {
+        const hidden = document.createElement('input');
+        hidden.type = 'hidden';
+        hidden.name = 'interests[]';
+        hidden.value = id;
+        form.appendChild(hidden);
       }
     }
+  }
+
+  function tryBind(root) {
+    const node = (root || document).querySelector('.grid-container');
+    if (node) bind(node);
+  }
+
+  // Initial page load (if interests is loaded directly)
+  document.addEventListener('DOMContentLoaded', () => tryBind(document));
+
+  // Bind when HTMX swaps in the interests fragment
+  document.body.addEventListener('htmx:afterSwap', (e) => {
+    tryBind(e.detail && e.detail.target);
   });
-
-  function onToggle(e) {
-    const box = e.target.closest('[data-id]');
-    if (!box || !container.contains(box)) return;
-    toggleBox(box);
-  }
-
-  function toggleBox(box) {
-    const id = box.dataset.id;
-    const isSelected = box.classList.contains('selected');
-
-    if (isSelected) {
-      box.classList.remove('selected');
-      box.setAttribute('aria-pressed', 'false');
-      selected.delete(id);
-      syncHiddenInputs();
-      return;
-    }
-
-    if (selected.size >= max) {
-      // hit the cap: give feedback and ignore
-      box.classList.add('limit-hit');
-      setTimeout(() => box.classList.remove('limit-hit'), 250);
-      return;
-    }
-
-    box.classList.add('selected');
-    box.setAttribute('aria-pressed', 'true');
-    selected.add(id);
-    syncHiddenInputs();
-  }
-
-  function syncHiddenInputs() {
-    // 1) CSV field (simple to parse server-side)
-    if (csvInput) {
-      csvInput.value = Array.from(selected).join(',');
-    }
-    // 2) Also create multiple form values interests[] (handy in Django)
-    const form = container.closest('form');
-    if (!form) return;
-
-    // remove old dynamic inputs
-    form.querySelectorAll('input[name="interests[]"]').forEach(n => n.remove());
-    // add current selections
-    for (const id of selected) {
-      const hidden = document.createElement('input');
-      hidden.type = 'hidden';
-      hidden.name = 'interests[]';
-      hidden.value = id; // e.g., "box-7"
-      form.appendChild(hidden);
-    }
-  }
-});
-
+})();
