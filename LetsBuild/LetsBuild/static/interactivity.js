@@ -1,6 +1,3 @@
-// interactivity.js
-console.log('interactivity.js loaded');
-
 (function () {
   const MAX = 5;
 
@@ -71,10 +68,10 @@ console.log('interactivity.js loaded');
     if (node) bind(node);
   }
 
-  // Initial page load (if interests is loaded directly)
+
   document.addEventListener('DOMContentLoaded', () => tryBind(document));
 
-  // Bind when HTMX swaps in the interests fragment
+
   document.body.addEventListener('htmx:afterSwap', (e) => {
     tryBind(e.detail && e.detail.target);
   });
