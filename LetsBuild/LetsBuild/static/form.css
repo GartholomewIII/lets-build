@@ -39,18 +39,38 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        border: 2px solid black;
     }
     
-
+    .content-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        
+    }
     
+    .project-info {
+        width: 50%;
+        height: 100%;
+        padding-left: 2.5%;
+        padding-right: 2.5%;
+        background-color: beige;
+    }
+
+    .project-info h2 {
+        font-size: 12px;
+    }
+
+    .project-info h3 {
+        font-size: 12px;
+    }
 
     #topic-container {
         background-color: #fff;
         border-radius: 20px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.432);
         margin: auto;
-        padding: 5%;
+
         width: 35%;
         height: 50%;
 

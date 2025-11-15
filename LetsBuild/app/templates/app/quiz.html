@@ -19,28 +19,43 @@
     <div class="quiz-container">
         <form id="topic-container" hx-post="{% url 'get-questions' %}">
             <div class="content-box">
-                {% csrf_token %}
-                <h2 id="heading-text">Tell Us About Yourself</h2>
+                
+                <div class="project-info">
+                    {% csrf_token %}
+                    <h2 id="heading-text">Tell Us About Yourself</h2>
+                    <h3 id="description">
+                        Lets Build is the first ever software development companion that puts human learning at the 
+                        forefront of its stated mission. After the completion of this assessment our highly sophisticated
+                        LLM will know exactly what you'll want to build (even before you know it yourself) and put you on
+                        the right path to learning through experience.
+                    </h3>
+
+                </div>
+
                 <div id="topic-list">
                 <p>Please select the quiz below to begin your aptitude assessment</p>
 
                 <ol style="list-style-type: none;">
-                {% for topic in topics %}
-                <li class="option">
-                    <input
-                        type="radio"
-                        id="topic-{{ forloop.counter0 }}"
-                        value="{{ topic.id }}"
-                        name="quiz_id"
-                        required
-                    />
-                    <label for="topic-{{ forloop.counter0 }}">{{ topic.name }} ({{ topic.questions_count }} questions)</label>
-                    </li>
-                    {% endfor %} {% if not topics %}
-                    <li>
+                {% if topics and topics|length == 1 %}
+                    <input type="hidden" name="quiz_id" value="{{ topics.0.id }}">
+                    <p>Starting: {{ topics.0.name }} ({{ topics.0.questions_count }} questions)</p>
+                {% else %}
+                    <ol style="list-style-type: none;">
+                        {% for topic in topics %}
+                        <li class="option">
+                            <input
+                                type="radio"
+                                id="topic-{{ forloop.counter0 }}"
+                                value="{{ topic.id }}"
+                                name="quiz_id"
+                                required
+                            />
+                            <label for="topic-{{ forloop.counter0 }}">{{ topic.name }} ({{ topic.questions_count }} questions)</label>
+                        </li>
+                        {% endfor %}
+                </ol>
+            {% endif %}
 
-                    </li>
-                    {% endif %}
                 </ol>
 
                     <button class="btn" type="submit">Start your quiz</button>
