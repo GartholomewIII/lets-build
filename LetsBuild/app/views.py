@@ -9,7 +9,7 @@ from django.shortcuts import render, redirect
 
 from .forms import CreateUserForm, LoginForm
 
-from django.http import HttpResponse, HttpRequest
+from django.http import HttpResponse, HttpRequest, HttpResponseBadRequest
 
 from django.db.models import Count
 
@@ -22,6 +22,43 @@ from django.contrib.auth.models import auth
 from django.contrib.auth import authenticate, login, logout
 
 from typing import Optional
+
+ALLOWED_INTERESTS = {
+    "box-1","box-2","box-3","box-4","box-5",
+    "box-6","box-7","box-8","box-9","box-10",
+    "box-11","box-12","box-13","box-14","box-15",
+    "box-16","box-17","box-18","box-19","box-20",
+    "box-21","box-22","box-23","box-24","box-25",
+}
+
+def save_interests(request):
+
+    if request.method != "POST":
+        return HttpResponseBadRequest("Invalid")
+
+    submission_id = request.session.get("submission_id")
+
+    if not submission_id:
+        return HttpResponseBadRequest("No Active Submission")
+
+    submission = SurveySubmission.objects.get(id= submission_id)
+
+    picked = request.POST.getlist("interests[]")
+
+    if not picked:
+        csv = request.POST.get("interests_csv", "")
+
+        picked = [p for p in csv.split(",") if p]
+
+    picked = [p for p in picked if p in ALLOWED_INTERESTS][:5]
+
+    if not picked:
+        return render(request, "app/interests.html", {"error": "Please pick at least one interest."})
+
+    submission.set_interests(picked)
+
+    return get_finish(request)
+
 
 
 def homepage(request):
@@ -202,7 +239,7 @@ def get_finish(request) -> HttpResponse:
 
     return render(
         request,
-        'app/interests.html',
+        'app/dashboard.html',
         {
             'questions_count': questions_count,
             'responses_count': responses_count,
