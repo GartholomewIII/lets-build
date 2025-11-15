@@ -27,6 +27,8 @@ urlpatterns = [
 
     path('get-finish', views.get_finish, name='get-finish'),
 
-    path('interests', views.get_interests, name='interests' )
+    path('interests', views.get_interests, name='interests'),
+
+    path("save-interests", views.save_interests, name="save-interests"),
 
 ]

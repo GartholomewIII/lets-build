@@ -35,6 +35,25 @@ class SurveySubmission(models.Model):
 
         return f'Submission Number {self.id} for quiz {self.quiz.name}'
 
+    interests = models.JSONField(default= list, blank= True)
+
+    def set_interests(self, slugs):
+
+        clean, seen = [], set()
+
+        for s in slugs:
+            s = str(s).strip()
+
+            if s and s not in seen:
+                seen.add(s)
+                clean.append(s)
+
+            if len(clean) == 5:
+                break
+
+        self.interests = clean
+        self.save(update_fields= ["interests"])
+
 
 class SurveyAnswer(models.Model):
 
