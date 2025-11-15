@@ -46,7 +46,10 @@
         justify-content: center;
         align-items: center;
         overflow: hidden;
-        
+
+        flex-direction: row;
+        height: 100%;
+
     }
     
     .project-info {
@@ -54,15 +57,28 @@
         height: 100%;
         padding-left: 2.5%;
         padding-right: 2.5%;
-        background-color: beige;
+        background-color: black;
+        flex: 1;
+
+        display: flex;
+        flex-direction: column; 
+        align-items: center; 
+        justify-content: center;
+        
+        overflow: hidden;
+
+        text-align: center;
+
     }
 
     .project-info h2 {
         font-size: 12px;
+        color: white;
     }
 
     .project-info h3 {
         font-size: 12px;
+        color: white;
     }
 
     #topic-container {
@@ -77,6 +93,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
+
+        overflow: hidden;
     }
 
     #topic-list {
@@ -85,6 +103,13 @@
         flex-direction: column;
         align-items: center;
         
+        background-color: white;
+        width: 50%;
+
+        padding-left: 2.5%;
+        padding-right: 2.5%;
+
+        text-align: center;
 
     }
 
@@ -122,7 +147,7 @@
     }
 
     .btn {
-        background-color: #007bff;
+        background-color: #000000;
         color: #fff;
         border: none;
         padding: 10px 20px;
