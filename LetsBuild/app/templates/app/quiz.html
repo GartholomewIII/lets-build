@@ -19,16 +19,22 @@
     <div class="quiz-container">
         <form id="topic-container" hx-post="{% url 'get-questions' %}">
             <div class="content-box">
-                
+
                 <div class="project-info">
                     {% csrf_token %}
-                    <h2 id="heading-text">Tell Us About Yourself</h2>
-                    <h3 id="description">
-                        Lets Build is the first ever software development companion that puts human learning at the 
-                        forefront of its stated mission. After the completion of this assessment our highly sophisticated
-                        LLM will know exactly what you'll want to build (even before you know it yourself) and put you on
-                        the right path to learning through experience.
-                    </h3>
+                    <div class="heading-text-box">
+                    
+                        <h2 id="heading-text">Tell Us About Yourself</h2>
+                    
+                    </div>
+                    <div class="description-box">
+                        <h3 id="description">
+                            Lets Build is the first ever software development companion that puts human learning at the 
+                            forefront of its stated mission. After the completion of this assessment our highly sophisticated
+                            LLM will know exactly what you'll want to build (even before you know it yourself) and put you on
+                            the right path to learning through experience.
+                        </h3>
+                    </div>
 
                 </div>
 
