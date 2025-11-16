@@ -44,7 +44,7 @@
                 <ol style="list-style-type: none;">
                 {% if topics and topics|length == 1 %}
                     <input type="hidden" name="quiz_id" value="{{ topics.0.id }}">
-                    <p>Starting: {{ topics.0.name }} ({{ topics.0.questions_count }} questions)</p>
+                    
                 {% else %}
                     <ol style="list-style-type: none;">
                         {% for topic in topics %}
