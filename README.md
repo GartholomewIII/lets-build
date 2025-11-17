@@ -27,7 +27,7 @@ learned.
 
 #### Quiz Entry:
 
-![login](readme-assets/quiz-example.mp4)
+![login](readme-assets/quiz-example.gif)
 
 #### Quiz Questions:
 
