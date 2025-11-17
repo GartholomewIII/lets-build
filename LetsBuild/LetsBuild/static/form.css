@@ -29,9 +29,14 @@
         padding: 0;
         height: 100%;
         width: 100%;
+    }
 
-
-
+    body {
+        background-image: url('assets/quiz-bg-gif.gif'); 
+        background-size: cover; 
+        background-position: center center; 
+        background-repeat: no-repeat;
+        background-attachment: fixed; 
     }
     .whole-content {
         width: 100%;
@@ -121,12 +126,10 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        
         background-color: white;
+        height: 100%;
         width: 50%;
-
         padding: 5%;
-
         text-align: center;
 
     }
@@ -184,15 +187,33 @@
 
     .follow {
         display: flex;
+        justify-content: center;
+        align-items: center;
+        column-gap: 20%;
         width: 45%;
+
+        margin-top: 3%;
     }
 
-    .github-logo {
+    .follow-header {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, 50%);
+        border: 2px solid black;
+        z-index: 2;
+        background-color: white;
+        padding: 1.5%;
+    }
+
+    .github-logo, .insta-logo, .twitter-logo {
         position: relative;
         width: fit-content;
+        width: 50px;
+        height: 50px;
     }
 
-    .git-hub-link {
+    .git-hub-link, .insta-link, .twitter-link {
         position:absolute; 
         width:100%;
         height:100%;
@@ -200,11 +221,28 @@
         left: 0;
 
         z-index: 2;
-        background-image: url('assets/icons/github-mark.png');
         background-size: cover;
         background-position: center; 
         background-repeat: no-repeat;
-    }    
+
+        transition: filter 0.3s ease;
+    }
+    .git-hub-link:hover, .insta-link:hover, .twitter-link:hover {
+        cursor: pointer;
+        transform: scale(1.1);
+        filter: blur(3px);
+    }
+
+    .insta-link {
+        background-image: url('assets/icons/instagram-glyph-seeklogo.png');
+    }
+
+    .twitter-link {
+        background-image: url('assets/icons/twitter-logo.png');
+    }
+    .git-hub-link {
+        background-image: url('assets/icons/github-mark.png');
+    }
 }
 
 /* xxl ≥1400px (BS5) */
