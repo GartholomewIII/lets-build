@@ -5,13 +5,13 @@
 }
 
 @font-face {
-    font-family: 'Cormorant';
-    src: url('assets/fonts/CormorantGaramond-VariableFont_wght.ttf') format('truetype');
+    font-family: 'Tiempos';
+    src: url('assets/fonts/Tiempos-Headline.otf') format('OpenType');
 }
 
 
 body {
-    font-family: 'Cormorant';
+    font-family: 'Tiempos';
     
 }
 /* sm ≥576px */
@@ -47,7 +47,7 @@ body {
         background-position: center center; 
         background-repeat: no-repeat;
         background-attachment: fixed; 
-        font-family: 'Cutive-Regular';
+
     }
     .whole-content {
         width: 100%;
@@ -190,6 +190,8 @@ body {
         transition: background-color 0.3s ease-out;
         display: block;
         margin: 20px auto;
+
+        font-family: 'Tiempos';
     }
 
     .btn:hover {
