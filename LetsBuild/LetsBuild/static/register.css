@@ -4,6 +4,15 @@
     padding: 0;
     box-sizing: border-box; 
 }
+@font-face {
+    font-family: 'StyreneA';
+    src: url('assets/fonts/StyreneA.woff2') format('woff2');
+}
+
+html, body, * {
+    font-family: 'StyreneA' !important;
+}
+
 
 
 /* sm ≥576px */
