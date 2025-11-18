@@ -6,7 +6,7 @@
     <title>Start your quiz</title>
     <link rel="stylesheet" href="{% static 'form.css' %}">
     <link rel="stylesheet" href="{% static 'grid-selection.css' %}">
-    <link rel="stylesheet" href="{% static 'question-form.css'}">
+    <link rel="stylesheet" href="{% static 'question-form.css' %}">
     <script
         src="https://unpkg.com/htmx.org@1.9.10"
         integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
@@ -39,36 +39,41 @@
                         
                     </div>
 
-                    <div id="topic-list">
-                    <p>Please select the quiz below to begin your aptitude assessment</p>
+                    
+                        <div id="topic-list">
 
-                    <ol style="list-style-type: none;">
-                    {% if topics and topics|length == 1 %}
-                        <input type="hidden" name="quiz_id" value="{{ topics.0.id }}">
-                        
-                    {% else %}
-                        <ol style="list-style-type: none;" class="question_box">
-                            {% for topic in topics %}
-                            <li class="option">
-                                <input
-                                    type="radio"
-                                    id="topic-{{ forloop.counter0 }}"
-                                    value="{{ topic.id }}"
-                                    name="quiz_id"
-                                    required
-                                />
-                                <label for="topic-{{ forloop.counter0 }}">{{ topic.name }} ({{ topic.questions_count }} questions)</label>
-                            </li>
-                            {% endfor %}
-                    </ol>
-                {% endif %}
+                        <p>Please select the quiz below to begin your aptitude assessment</p>
 
-                    </ol>
+                        <ol style="list-style-type: none;">
+                        {% if topics and topics|length == 1 %}
+                            <input type="hidden" name="quiz_id" value="{{ topics.0.id }}">
+                            
+                        {% else %}
+                            <ol style="list-style-type: none;" class="question-box">
+                                {% for topic in topics %}
+                                <li class="option">
+                                    <input
+                                        type="radio"
+                                        id="topic-{{ forloop.counter0 }}"
+                                        value="{{ topic.id }}"
+                                        name="quiz_id"
+                                        required
+                                    />
+                                    <label for="topic-{{ forloop.counter0 }}">{{ topic.name }} ({{ topic.questions_count }} questions)</label>
+                                </li>
+                                {% endfor %}
+                            </ol>
+                        {% endif %}
+
+                        </ol>
 
 
 
-                        <button class="btn" type="submit">Start your quiz</button>
-                    </div>
+                            <button class="btn"
+                                    type="submit">
+                                    Start your quiz
+                            </button>
+                        </div>
 
                     <div class="follow-header">
                         <h2>follow this project</h2>
