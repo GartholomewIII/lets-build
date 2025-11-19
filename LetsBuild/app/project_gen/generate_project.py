@@ -80,6 +80,7 @@ def get_project_recs(user):
 
     ai_msg = llm.invoke(prompt)
 
+    print(ai_msg)
     try:
         projects = json.loads(ai_msg)
 

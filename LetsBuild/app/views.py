@@ -275,7 +275,7 @@ def rec_view(request):
     if not request.user.is_authenticated:
         return redirect('login')
 
-    projects = get_project_recs(request.user)
+    projects = generate_project.get_project_recs(request.user)
 
     return render(request, "app/dashboard.html", {
         "projects": projects
