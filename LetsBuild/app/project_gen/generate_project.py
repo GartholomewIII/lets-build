@@ -2,6 +2,7 @@ import os
 import sys 
 import django
 import json
+import re
 
 from langchain_ollama import ChatOllama
 from app.models import SurveySubmission, SurveyAnswer
@@ -46,6 +47,18 @@ def _convert_to_LLM_text(quiz_data, interest_data):
 
     return prompt
 
+def _clean_text(text):
+
+    text = re.sub(r"'''[a-zA-Z]*", "", text).replace("'''", "")
+
+    match = re.search(r"\[\s*{[\s\S]*}\s*\]", text)
+
+    if not matcg:
+        raise ValueError("No JSON array found")
+
+    json_str = match.group(0)
+
+    json.loads(json_str)
 
 def get_logged_in_prompt(user): #pass through user obj to peek at data
     if not user.is_authenticated:
@@ -80,17 +93,7 @@ def get_project_recs(user):
 
     ai_msg = llm.invoke(prompt)
 
-    print(ai_msg)
-    try:
-        projects = json.loads(ai_msg)
-
-    except TypeError:
-        projects = json.loads(ai_msg.content)
-    except json.JSONDecodeError:
-
-        cleaned = ai_msg.content.strip().split("\n")[0]
-        projects = json.loads(clean)
-    return projects
+    return _clean_text(ai_msg)
 
 
 if __name__ == '__main__':
