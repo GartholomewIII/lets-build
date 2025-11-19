@@ -19,6 +19,9 @@ class Answer(models.Model):
     text = models.CharField(max_length=300)
     is_correct = models.BooleanField(default=False)
 
+
+
+#HOLDS USERS INTERESTS
 class SurveySubmission(models.Model):
 
     user = models.ForeignKey(
@@ -54,7 +57,10 @@ class SurveySubmission(models.Model):
         self.interests = clean
         self.save(update_fields= ["interests"])
 
+    def get_interests(self):
+        return self.interests
 
+# HOLDS QUIZ DATA (NO INTERESTS)
 class SurveyAnswer(models.Model):
 
     submission = models.ForeignKey(
