@@ -23,6 +23,8 @@ from django.contrib.auth import authenticate, login, logout
 
 from typing import Optional
 
+from .project_gen import generate_project
+
 ALLOWED_INTERESTS = {
     "basketball","music","coding","cooking","gaming",
     "movies","reading","biology","soccer","painting",
@@ -237,14 +239,7 @@ def get_finish(request) -> HttpResponse:
 
     request = _reset_quiz(request)
 
-    return render(
-        request,
-        'app/dashboard.html',
-        {
-            'questions_count': questions_count,
-            'responses_count': responses_count,
-        }
-    )
+    return rec_view(request)
 
 def _reset_quiz(request) -> HttpRequest:
 
@@ -274,4 +269,15 @@ def go_to_register(request):
 
 def get_interests(request):
     return render(request, 'app/interests.html')
+
+def rec_view(request):
+
+    if not request.user.is_authenticated:
+        return redirect('login')
+
+    projects = get_project_recs(request.user)
+
+    return render(request, "app/dashboard.html", {
+        "projects": projects
+    })
 

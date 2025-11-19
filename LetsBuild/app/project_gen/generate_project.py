@@ -4,6 +4,8 @@ import django
 import json
 
 from langchain_ollama import ChatOllama
+from app.models import SurveySubmission, SurveyAnswer
+from django.contrib.auth import get_user_model
 
 #Priv function allows for testing as a script
 def _setup_django(): # Accesses the root directory project_gen -> app -> LetsBuild -> Root
@@ -68,16 +70,26 @@ def get_logged_in_prompt(user): #pass through user obj to peek at data
     return _convert_to_LLM_text(quiz_data, interest_data) 
 
 
-def get_project_recs(prompt):
+def get_project_recs(user):
 
     llm = ChatOllama(
         model="llama3.2:1b",
     )
 
+    prompt = get_logged_in_prompt(user)
 
     ai_msg = llm.invoke(prompt)
 
-    return ai_msg
+    try:
+        projects = json.loads(ai_msg)
+
+    except TypeError:
+        projects = json.loads(ai_msg.content)
+    except json.JSONDecodeError:
+
+        cleaned = ai_msg.content.strip().split("\n")[0]
+        projects = json.loads(clean)
+    return projects
 
 
 if __name__ == '__main__':
