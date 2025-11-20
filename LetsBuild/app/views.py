@@ -272,12 +272,13 @@ def get_interests(request):
 
 def rec_view(request):
 
-    if not request.user.is_authenticated:
-        return redirect('login')
+    if "saved_projects" in request.session:
+        projects = request.session["saved_projects"]
+    else:
 
-    projects = generate_project.get_project_recs(request.user)
-    print(projects)
-    return render(request, "app/dashboard.html", {
-        "projects": projects
-    })
+        projects = generate_project.get_project_recs(request.user)
+
+        request.session["saved_projects"] = projects
+
+    return render(request, "app/dashboard.html", {"projects": projects})
 

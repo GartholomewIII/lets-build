@@ -20,7 +20,17 @@
 }
 /* xl ≥1200px */
 @media (min-width: 1200px) { 
-
+    .main-content {
+        background-color: black;
+        justify-content: flex;
+        width: 100%;
+        height: 100%;
+        flex-direction: row;
+    }
+    .project-card {
+        flex: 1;
+        height: 100%;
+    }
 }
 
 /* xxl ≥1400px (BS5) */
