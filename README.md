@@ -33,6 +33,10 @@ learned.
 
 ![login](readme-assets/question-example.png)
 
+#### Quiz Results Example:
+
+![login](readme-assets/quiz-result-example.gif)
+
 ### Open Source Statement
 
 Lets Build is free and open source software, feel free to use and modify it in any way you see fit
