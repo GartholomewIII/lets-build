@@ -11,21 +11,51 @@
 
 <div class="main-content">
     {% for project in projects %}
-        <div class="project-card">
+        <div class="project-card card-{{ forloop.counter }}" >
             <div class="project-header">
                 <h3>{{ project.project_name}}</h3>
             </div>
-            
-            <div class="project-steps">
-                
-                {% for steps in project.list_of_steps %}
-                    
-                    <h4>{{ steps }}</h4>
-                {% endfor %}
+            <div class="img-box">
+                <div class="project-img">
+                    <p>placeholder</p>
+                </div>
             </div>
+
+            <div class="project-description">
+                <div class="difficulty">
+                    <p>Difficulty: {{ project.difficulty }}</p>
+                </div>
+
+                <div class="areas-of-focus">
+                    <div class="focus-header">
+                        <p>Area of Focus: </p>
+                    </div>
+                    {% for focus in project.areas_of_focus %}
+                    <div class="focus-box">
+                        <p> {{ focus }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <div class="project-steps">
+                    
+                    {% for steps in project.list_of_steps %}
+                        
+                        <h4>{{ steps }}</h4>
+                    {% endfor %}
+                </div>
+            </div>
+
+                <div class="select">
+                    
+                </div>
+            
         </div>
     {% endfor %}
     <!--<a href="{% url 'user-logout' %}">logout</a> -->
+
+</div>
+<div class="take-quiz-again">
 
 </div>
 </body>

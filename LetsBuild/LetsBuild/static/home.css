@@ -5,6 +5,16 @@
 }
 
 
+@font-face {
+    font-family: 'Tiempos';
+    src: url('assets/fonts/Tiempos-Headline.otf') format('opentype');
+}
+
+
+body {
+    font-family: 'Tiempos';
+    
+}
 /* sm ≥576px */
 @media (min-width: 576px) { 
 
@@ -30,7 +40,119 @@
     .project-card {
         flex: 1;
         height: 100%;
-        border: 2px solid black;
+
+        opacity: 0;
+        transform: translateX(-50px);
+        animation: slideIn 0.7s ease-out forwards;
+
+        padding: 2%;
+
+        position: relative;
+    }
+
+    .card-1 {
+        background-color: black;
+        color: white;
+
+        animation-delay: 0.0s;
+    }
+
+    .card-2 {
+        background-color: rgb(128,128,128);
+
+        animation-delay: 0.2s;
+    }
+
+    .card-3 {
+        background-color: white;
+
+        animation-delay: 0.4s; 
+    }
+
+    @keyframes slideIn {
+        0% {
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+
+
+    .img-box {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-top: 10px;
+
+    }
+    .project-img {
+        width: 100px;
+        height: 100px;
+        background-color: blue;
+
+        position: absolute;
+        top: 15%;
+    }
+    .project-header {
+        width: 100%;
+        display: flex;
+        text-align: center;
+
+    }
+
+    .project-description {
+        position: absolute;
+        top: 40%;
+        padding-right: 2%;
+    }
+
+    .difficulty {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .areas-of-focus {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .focus-box:nth-child(2){
+        background-color: blue;
+    }
+
+    .focus-box:nth-child(3){
+        background-color: orange;
+    }
+
+    .project-steps {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        padding-top: 10%;
+    
+    }
+
+    .select {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: red;
+        position: absolute;
+        top: 15%;
+    }
+
+    .select:hover {
+        cursor: pointer;
+        filter: blur(3px);
     }
 }
 
