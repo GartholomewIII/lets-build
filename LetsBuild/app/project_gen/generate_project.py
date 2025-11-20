@@ -41,25 +41,31 @@ def _convert_to_LLM_text(quiz_data, interest_data):
 
         create an array of dicts, with each dict representing one project, in each project dict you will have these keys: project_name, difficulty, areas_of_focus and list_of_steps which will have a value of an array with the chosen steps to reach project creation
 
-        IMPORTANT OUTPUT GUIDLINES: DO NOT RETURN ANYTHING BESIDES THE ARRAY OF DICTS SO I CAN BETTER PARSE THE DATA THAT INCLUDES ANY EXPLAINATION OR DESCRIBING THE PROJECTS AFTER THE 
-        INITIAL DICT
+        Return ONLY a valid JSON array. 
+        
+        No code fences, no JavaScript, no explanations, no markdown.
+
+
         """
 
     return prompt
 
 def _clean_text(text):
 
-    text = re.sub(r"'''[a-zA-Z]*", "", text).replace("'''", "")
+    if not isinstance(text, str):
+        raise TypeError(f"_clean_text expected a string but got {type(text)}")
 
-    match = re.search(r"\[\s*{[\s\S]*}\s*\]", text)
+    text = re.sub(r"```[a-zA-Z]*", "", text)  
+    text = text.replace("```", "")            
 
-    if not matcg:
-        raise ValueError("No JSON array found")
+
+    match = re.search(r"\[\s*{[\s\S]*?}\s*\]", text)
+    if not match:
+        raise ValueError("No JSON array found in LLM output")
 
     json_str = match.group(0)
 
-    json.loads(json_str)
-
+    return json.loads(json_str)
 def get_logged_in_prompt(user): #pass through user obj to peek at data
     if not user.is_authenticated:
         return
@@ -93,7 +99,7 @@ def get_project_recs(user):
 
     ai_msg = llm.invoke(prompt)
 
-    return _clean_text(ai_msg)
+    return _clean_text(ai_msg.content)
 
 
 if __name__ == '__main__':

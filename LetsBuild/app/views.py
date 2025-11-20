@@ -276,7 +276,7 @@ def rec_view(request):
         return redirect('login')
 
     projects = generate_project.get_project_recs(request.user)
-
+    print(projects)
     return render(request, "app/dashboard.html", {
         "projects": projects
     })
