@@ -154,6 +154,10 @@ body {
         cursor: pointer;
         filter: blur(3px);
     }
+
+    .continue-btn {
+        display: none;
+    }
 }
 
 /* xxl ≥1400px (BS5) */
