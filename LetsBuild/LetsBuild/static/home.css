@@ -157,6 +157,18 @@ body {
 
     .continue-btn {
         display: none;
+
+
+        position: absolute;
+        top: 85%;
+    }
+
+    .continue-btn-box {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-top: 10px;
     }
 }
 

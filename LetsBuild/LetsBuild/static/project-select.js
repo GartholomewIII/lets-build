@@ -9,3 +9,5 @@ function toggleContinue() {
     ClickCount++;
     continueBtn.style.display = (ClickCount % 2 === 0) ? "none" : "flex";
 }
+
+
