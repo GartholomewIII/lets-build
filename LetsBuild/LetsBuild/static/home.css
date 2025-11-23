@@ -35,38 +35,36 @@ body {
         width: 100%;
         height: 100vh;
         flex-direction: row;
-        
     }
+
     .project-card {
         flex: 1;
         height: 100%;
-
         opacity: 0;
         transform: translateX(-50px);
         animation: slideIn 0.7s ease-out forwards;
-
         padding: 2%;
-
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
         position: relative;
+        box-sizing: border-box;
     }
 
     .card-1 {
         background-color: black;
         color: white;
-
-        animation-delay: 0.0s;
+        animation-delay: 0s;
     }
 
     .card-2 {
         background-color: rgb(128,128,128);
-
         animation-delay: 0.2s;
     }
 
     .card-3 {
         background-color: white;
-
-        animation-delay: 0.4s; 
+        animation-delay: 0.4s;
     }
 
     @keyframes slideIn {
@@ -80,35 +78,31 @@ body {
         }
     }
 
-
+    .project-header {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        text-align: center;
+    }
 
     .img-box {
         width: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
-        padding-top: 10px;
-
     }
+
     .project-img {
         width: 100px;
         height: 100px;
         background-color: blue;
-
-        position: absolute;
-        top: 15%;
-    }
-    .project-header {
-        width: 100%;
-        display: flex;
-        text-align: center;
-
     }
 
     .project-description {
-        position: absolute;
-        top: 40%;
-        padding-right: 2%;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        flex-grow: 1;
     }
 
     .difficulty {
@@ -125,11 +119,11 @@ body {
         justify-content: space-between;
     }
 
-    .focus-box:nth-child(2){
+    .focus-box:nth-child(2) {
         background-color: blue;
     }
 
-    .focus-box:nth-child(3){
+    .focus-box:nth-child(3) {
         background-color: orange;
     }
 
@@ -137,30 +131,46 @@ body {
         width: 100%;
         display: flex;
         flex-direction: column;
-        padding-top: 10%;
-    
+        gap: 10px;
+        margin-top: 20%;
+    }
+
+    .project-step-text {
+        padding-bottom: 1%;
     }
 
     .select {
+        transition: transform 0.7s ease;
+
         width: 50px;
         height: 50px;
         border-radius: 50%;
-        background-color: red;
         position: absolute;
         top: 15%;
+        left: 2%;
+        background-color: red;
+        background-image: url('assets/icons/plus.png');
+        background-size: 70%;
+        background-repeat: no-repeat;
+        background-position: center;
+
     }
 
     .select:hover {
         cursor: pointer;
-        filter: blur(3px);
+
+    }
+    
+    .select.rotated {
+    transform: rotate(45deg);
     }
 
     .continue-btn {
         display: none;
-
-
         position: absolute;
-        top: 85%;
+        bottom: 5%;
+        left: 50%;
+        transform: translateX(-50%);
     }
 
     .continue-btn-box {
@@ -168,7 +178,6 @@ body {
         display: flex;
         justify-content: center;
         align-items: center;
-        padding-top: 10px;
     }
 }
 
