@@ -44,7 +44,6 @@ html, body, * {
     }
 
     .register .vh-100 {
-        all: unset;
         height: auto !important;
         min-height: 100vh;
         display: flex;

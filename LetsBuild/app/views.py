@@ -118,12 +118,14 @@ def login(request):
                 if user_data.last_login is None:
                     topics = Quiz.objects.all().annotate(questions_count= Count('question'))
                     return render(
-                        request, 'quiz.html', context={'topics': topics}
+                        request, 'app/quiz.html', context={'topics': topics}
                     )
                     
                 
                 else:
-                    return redirect('dashboard')
+                    return render(
+                        request, 'app/index.html'
+                    )
 
     context = {'loginform': form}
 
