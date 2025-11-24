@@ -274,26 +274,11 @@ def get_interests(request):
     return render(request, 'app/interests.html')
 
 def rec_view(request):
+    # Always regenerate projects (useful during development and after quiz completion)
+    projects = generate_project.get_project_recs(request.user)
+    request.session["saved_projects"] = projects
 
-    if "saved_projects" in request.session:
-        projects = request.session["saved_projects"]
-    else:
-
-        projects = generate_project.get_project_recs(request.user)
-
-        request.session["saved_projects"] = projects
-
-    chosen_project = None
-    if request.user.is_authenticated:
-        try:
-            up = UserProject.objects.filter(user=request.user).order_by('-created_at').first()
-            if up:
-                chosen_project = up.project
-                request.session['chosen_project'] = chosen_project
-        except Exception:
-            chosen_project = request.session.get('chosen_project')
-
-    return render(request, "app/dashboard.html", {"projects": projects, "chosen_project": chosen_project})
+    return render(request, "app/dashboard.html", {"projects": projects})
 
 @require_POST
 def save_chosen_project(request):

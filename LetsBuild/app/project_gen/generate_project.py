@@ -34,8 +34,8 @@ def _convert_to_LLM_text(quiz_data, interest_data):
         Suggest 3 projects. They can be loosely based on the users interests, make sure that each project
         is centrally focussed on software projects
 
-        An example of this could be: User selects fullstack app interest and they like cooking, naturally
-        a project you could suggest would be a fullstack virtual cookbook
+        If you reccomend a project based on one interest you cannot use that interest again for 
+        another project suggestion, they must each be different from each other
 
         ALSO IMPORTANT: MAKE SURE YOU SUGGEST 5 STEPS IN ACHIEVING THE COMPLETION OF THE PROJECT
         THEY CAN BE SEMI-VAGUE BUT PROVIDE A PATH TO REACH IT
