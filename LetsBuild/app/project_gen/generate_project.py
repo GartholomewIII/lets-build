@@ -3,6 +3,7 @@ import sys
 import django
 import json
 import re
+import ast
 
 from langchain_ollama import ChatOllama
 from app.models import SurveySubmission, SurveyAnswer
@@ -18,59 +19,90 @@ def _setup_django(): # Accesses the root directory project_gen -> app -> LetsBui
     django.setup()
 
 def _convert_to_LLM_text(quiz_data, interest_data):
-
     answer_json = json.dumps(quiz_data, indent=2)
-    interest_json = json.dumps(interest_data, indent= 2)
+    interest_json = json.dumps(interest_data, indent=2)
 
+    # Added "Strict JSON" instruction to prompt
     prompt = f"""
         You are an AI that recommends software development projects.
-
-        Here is a JSON array of the user's survey answers:
-
+        
+        User Survey Answers:
         {answer_json}
 
-        Here is a JSON array of the user's interests:
-
+        User Interests:
         {interest_json}
 
-        Using this data, suggest 3 projects for the user, these projects need to be within grasp of the user based on the survey answer data. They also need to be thematically 
-        focussed on at least one of their interests. An example could be this: user is interested in game development and astronomy, suggest a planetary simulation application
-        that will help them learn physics (important for game engines). After defining the project, please provide 5 general steps to complete the project, at a later point the user can choose more specfic ones, but for now, they can be broad.
-
-        Format the output like this:
-
-        create an array of dicts, with each dict representing one project, in each project dict you will have these keys: project_name, difficulty, areas_of_focus and list_of_steps which will have a value of an array with the chosen steps to reach project creation
-
-        Return ONLY a valid JSON array. 
+        Suggest 3 projects. They must be thematically focused on the user's interests and match their skill level from the survey.
         
-        No code fences, no JavaScript, no explanations, no markdown.
+        Structure the output as a strictly valid JSON array of objects.
+        Each object must have these keys: "project_name", "difficulty", "areas_of_focus", "list_of_steps".
+        
+        Example format:
+        [
+            {{
+                "project_name": "Planetary Sim",
+                "difficulty": "Intermediate",
+                "areas_of_focus": "Physics, Game Dev",
+                "list_of_steps": ["Step 1", "Step 2", "Step 3", "Step 4", "Step 5"]
+            }}
+        ]
 
-
-        """
+        Return ONLY the JSON array. Do not include "Here is your project" or Markdown formatting.
+    """
 
     return prompt
 
 def _clean_text(text):
 
     if not isinstance(text, str):
-        raise TypeError(f"_clean_text expected a string but got {type(text)}")
+        return [] 
 
-    text = re.sub(r"```[a-zA-Z]*", "", text)  
-    text = text.replace("```", "")            
+    text = re.sub(r"```[a-zA-Z]*", "", text)
+    text = text.replace("```", "")
 
 
-    match = re.search(r"\[\s*{[\s\S]*?}\s*\]", text)
-    if not match:
-        raise ValueError("No JSON array found in LLM output")
+    start_index = text.find('[')
+    end_index = text.rfind(']')
 
-    json_str = match.group(0)
+    if start_index == -1 or end_index == -1:
+        # Fallback: Sometimes models output just one dict without the list brackets
+        if text.strip().startswith('{') and text.strip().endswith('}'):
+            text = f"[{text}]"
+        else:
+            print(f"LLM OUTPUT ERROR: Could not find brackets. Output: {text}")
+            return []
 
-    return json.loads(json_str)
-def get_logged_in_prompt(user): #pass through user obj to peek at data
+    
+    if start_index != -1 and end_index != -1:
+        text = text[start_index : end_index + 1]
+
+    
+    try:
+        
+        return json.loads(text)
+    except json.JSONDecodeError:
+        pass
+
+    try:
+        text_fixed = re.sub(r",\s*]", "]", text)
+        text_fixed = re.sub(r",\s*}", "}", text_fixed)
+        return json.loads(text_fixed)
+    except json.JSONDecodeError:
+        pass
+
+    try:
+        return ast.literal_eval(text)
+    except (ValueError, SyntaxError):
+        pass
+        
+    print(f"FAILED TO PARSE JSON: {text}")
+    return []
+
+def get_logged_in_prompt(user): 
     if not user.is_authenticated:
         return
 
-    #last submission (should be only one after logged in)
+    
     submission = (
         SurveySubmission.objects
         .filter(user=user)
@@ -82,7 +114,7 @@ def get_logged_in_prompt(user): #pass through user obj to peek at data
     if submission is None:
         return []
 
-    # Get their answers as dicts
+    
     interest_data = submission.get_interests()
     quiz_data = SurveyAnswer.get_answers_for_submission(submission)
 
@@ -98,7 +130,7 @@ def get_project_recs(user):
     prompt = get_logged_in_prompt(user)
 
     ai_msg = llm.invoke(prompt)
-
+    print(ai_msg)
     return _clean_text(ai_msg.content)
 
 
