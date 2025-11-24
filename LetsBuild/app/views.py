@@ -100,6 +100,9 @@ def register(request):
 
 
 def login(request):
+
+    request.session.pop("saved_projects", None)
+
     
     form = LoginForm()
 
@@ -264,6 +267,11 @@ def dashboard(request):
 
 def user_logout(request):
 
+    request.session.pop("saved_projects", None)
+    request.session.pop("chosen_project", None)
+    request.session.pop("quiz_id", None)
+    request.session.pop("responses", None)
+    
     auth.logout(request)
 
     return redirect("")
@@ -292,55 +300,35 @@ def rec_view(request):
 @require_POST
 def save_chosen_project(request):
     
-    index = None
-
     try:
-
-        payload = json.loads(request.body.decode() or "{}")
-        if isinstance(payload, dict):
-            index = int(payload.get("index", None))
-
+        payload = json.loads(request.body.decode())
+        index = int(payload.get("index", -1))
     except Exception:
-        index = None
-
-
-    if index is None:
-        try:
-            index = int(request.POST.get("index", None))
-
-        except Exception:
-            return HttpResponseBadRequest("Invalid Payload")
+        return HttpResponseBadRequest("Invalid payload")
 
     projects = request.session.get("saved_projects")
 
-    if not projects:
+    if not projects or index < 0 or index >= len(projects):
+        return HttpResponseBadRequest("Invalid index")
 
-        projects = generate_project.get_project_recs(request.user)
+    chosen = projects[index]
 
-    if (
-        not isinstance(projects, list) or
-        index is None or
-        index < 0 or 
-        index >= len(projects)
-    ):
-        return HttpResponseBadRequest("Invalid Index")
 
-    chosen_project = projects[index]
-
-    request.session["chosen_project"] = chosen_project
+    request.session["chosen_project"] = chosen
 
     if request.user.is_authenticated:
         from .models import UserProject
 
-        try:
-            UserProject.objects.create(
-                user= request.user,
-                project= chosen_project
-            )
-        except Exception:
-            pass
+        UserProject.objects.filter(user=request.user).delete()
+
+        # Create new one
+        UserProject.objects.create(
+            user=request.user,
+            project=chosen
+        )
+
     return JsonResponse({
         "success": True,
-        "redirect_url": reverse("index")
-    })    
+        "redirect_url": reverse("index")  # change if needed
+    })
 

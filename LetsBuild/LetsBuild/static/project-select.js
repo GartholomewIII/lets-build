@@ -31,6 +31,20 @@ console.log("project-select.js loaded");
     const csrftoken = getCookie('csrftoken');
 
     function setSelected(index) {
+        document.querySelectorAll('.select-btn').forEach(btn =>
+        btn.classList.remove('rotated')
+        );
+
+        // Add rotation to the active button
+        const selectedBtn = document.querySelector(
+            `.project-card[data-index="${index}"] .select-btn`
+        );
+        if (selectedBtn) {
+            selectedBtn.classList.add('rotated');
+        }
+
+
+
         index = Number(index);
 
 
@@ -64,9 +78,6 @@ console.log("project-select.js loaded");
     cards.forEach(card => {
         const index = card.dataset.index;
 
-        // Click anywhere on card
-        card.addEventListener('click', () => setSelected(index));
-
         // Click select button only
         const btn = card.querySelector('.select-btn');
         if (btn) {
@@ -76,11 +87,14 @@ console.log("project-select.js loaded");
             });
         }
 
-        // Keyboard support
+        // Keyboard support only when focus is on select button
         card.addEventListener('keydown', (e) => {
             if (['Enter', ' '].includes(e.key)) {
-                e.preventDefault();
-                setSelected(index);
+                const isButton = document.activeElement.classList.contains('select-btn');
+                if (isButton) {
+                    e.preventDefault();
+                    setSelected(index);
+                }
             }
         });
     });

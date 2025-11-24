@@ -143,34 +143,42 @@ body {
 
     .select {
         transition: transform 0.7s ease;
-
         width: 50px;
         height: 50px;
         border-radius: 50%;
         position: absolute;
         top: 15%;
         left: 2%;
-        background-color: red;
-        background-image: url('assets/icons/plus.png');
+        background-color: red ;
         background-size: 70%;
         background-repeat: no-repeat;
         background-position: center;
-
+        
     }
 
     .select-btn {
         width: 100%;
         height: 100%;
         overflow: hidden;
+        border: none;
+        background-color: red;
+        border-radius: 50%;
     }
 
-    .select:hover {
+    .select-btn img {
+        width: 70%;
+        height: 70%;
+        display: block;
+        margin: auto;
+    }
+
+    .select-btn:hover {
         cursor: pointer;
 
     }
     
-    .select.rotated {
-    transform: rotate(45deg);
+    .select-btn.rotated img {
+        transform: rotate(45deg);
     }
 
     .continue-btn {
@@ -178,7 +186,6 @@ body {
         bottom: 5%;
         left: 50%;
         transform: translateX(-50%);
-        padding: 2%;
         background-color: white;
         border: none;
         font-family: 'Tiempos';
