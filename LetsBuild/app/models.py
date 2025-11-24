@@ -92,3 +92,9 @@ class SurveyAnswer(models.Model):
 
         return f'Q: {self.question.text} A: {self.answer.text }'
 
+
+#HOLDS USERS CHOSEN PROJECT 
+
+class UserProject(models.Model):
+
+    pass

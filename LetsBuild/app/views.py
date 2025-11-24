@@ -13,7 +13,7 @@ from django.http import HttpResponse, HttpRequest, HttpResponseBadRequest
 
 from django.db.models import Count
 
-from .models import Quiz, Question, Answer, SurveyAnswer, SurveySubmission
+from .models import Quiz, Question, Answer, SurveyAnswer, SurveySubmission, UserProject
 
 from django.core.paginator import Paginator
 
@@ -283,4 +283,8 @@ def rec_view(request):
         request.session["saved_projects"] = projects
 
     return render(request, "app/dashboard.html", {"projects": projects})
+
+def save_chosen_project(request):
+
+    print("hello")
 

@@ -11,59 +11,65 @@
 <body>
 
 <div class="main-content">
-    {% for project in projects %}
-        <div class="project-card card-{{ forloop.counter }}" >
-            <div class="project-header">
-                <h3>{{ project.project_name}}</h3>
-            </div>
-            <div class="img-box">
-                <div class="project-img">
-                    <p>placeholder</p>
-                </div>
-            </div>
 
-            <div class="project-description">
-                <div class="difficulty">
-                    <p>Difficulty: {{ project.difficulty }}</p>
-                </div>
+    <form method="POST" action="{% url 'save-project' %}">
+        {% csrf_token %}
 
-                <div class="areas-of-focus">
-                    <div class="focus-header">
-                        <p>Area of Focus: </p>
+        {% for project in projects %}
+            <div class="project-card card-{{ forloop.counter }}" >
+                <div class="project-header">
+                    <h3>{{ project.project_name}}</h3>
+                </div>
+                <div class="img-box">
+                    <div class="project-img">
+                        <p>placeholder</p>
                     </div>
-                    {% for focus in project.areas_of_focus %}
-                    <div class="focus-box">
-                        <p> {{ focus }}</p>
+                </div>
+
+                <div class="project-description">
+                    <div class="difficulty">
+                        <p>Difficulty: {{ project.difficulty }}</p>
                     </div>
-                    {% endfor %}
-                </div>
-                
-                <div class="project-steps">
-                    
-                    {% for steps in project.list_of_steps %}
-                        
-                        <h4 class="project-step-text">{{ steps }}</h4>
-                    {% endfor %}
-                </div>
-            </div>
 
-                <div class="select">
-                    
-                </div>
-
-                {% if forloop.counter == 2 %}
-                    <div class="continue-btn-box">
-                        <div class ="continue-btn">
-                            <h3>Choose Project</h3>
+                    <div class="areas-of-focus">
+                        <div class="focus-header">
+                            <p>Area of Focus: </p>
                         </div>
+                        {% for focus in project.areas_of_focus %}
+                        <div class="focus-box">
+                            <p> {{ focus }}</p>
+                        </div>
+                        {% endfor %}
                     </div>
-                {% endif %}
-                
-            
-        </div>
-    {% endfor %}
-    <!--<a href="{% url 'user-logout' %}">logout</a> -->
+                    
+                    <div class="project-steps">
+                        
+                        {% for steps in project.list_of_steps %}
+                            
+                            <h4 class="project-step-text">{{ steps }}</h4>
+                        {% endfor %}
+                    </div>
+                </div>
 
+                    <div class="select">
+                        
+                    </div>
+
+                    {% if forloop.counter == 2 %}
+                        <div class="continue-btn-box">
+                            <div class ="continue-btn">
+                                <button type="submit" class="continue-btn">
+                                    <h3>Choose Project</h3>
+                                </button>
+                            </div>
+                        </div>
+                    {% endif %}
+                    
+                
+            </div>
+        {% endfor %}
+        <!--<a href="{% url 'user-logout' %}">logout</a> -->
+    </form>
 </div>
 <div class="take-quiz-again">
 </div>
