@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="{% static 'question-form.css' %}">
 </head>
 <body>
-  
+
 <form id="question-form" hx-post="{% url 'get-answer' %}">
     <div class="question-content"></div>
     {% csrf_token %}
@@ -34,11 +34,5 @@
     </div>
 </form>
 
-
-<script>
-  window.onbeforeunload = function () {
-    return 'Are you sure you want to leave? You will lose your progress.'
-  }
-</script>
 </body>
 </html>
