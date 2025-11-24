@@ -10,10 +10,13 @@
 </head>
 <body>
 
-<div class="main-content">
+
+<form style="display: none;">{% csrf_token %}</form>
+
+<div class="main-content" id="projects" data-save-url="{% url 'save-project' %}">
     
     {% for project in projects %}
-        <div class="project-card card-{{ forloop.counter }}" >
+        <div class="project-card card-{{ forloop.counter }} {% if chosen_project and chosen_project.project_name == project.project_name %}selected{% endif %}" data-index="{{ forloop.counter0 }}" role="button" tabindex="0" aria-pressed="false">
             <div class="project-header">
                 <h3>{{ project.project_name}}</h3>
             </div>
@@ -48,27 +51,19 @@
                 </div>
             </div>
 
-                <div class="select">
-                    
+                <div class="select" data-index="{{ forloop.counter0}}">
+                    <button type="button" class="select-btn" data-index="{{ forloop.counter0 }}">Select</button>
                 </div>
-
-                {% if forloop.counter == 2 %}
-                    <div class="continue-btn-box">
-                        <div class ="continue-btn">
-                            <button type="submit" class="continue-btn">
-                                <h3>Choose Project</h3>
-                            </button>
-                        </div>
-                    </div>
-                {% endif %}
                 
-            
         </div>
     {% endfor %}
     <!--<a href="{% url 'user-logout' %}">logout</a> -->
 
 </div>
-<div class="take-quiz-again">
+<div class="continue-btn-box" id="continue-container" style="display:none; justify-content:center; margin-top:20px;">
+    <div class="continue-btn">
+        <button type="button" id="continue-btn" class="continue-btn">Choose Project</button>
+    </div>
 </div>
 
 </body>

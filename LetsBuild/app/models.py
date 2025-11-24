@@ -96,5 +96,15 @@ class SurveyAnswer(models.Model):
 #HOLDS USERS CHOSEN PROJECT 
 
 class UserProject(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+    )
+    project = models.JSONField()
+    created_at = models.DateTimeField(auto_now_add=True)
 
-    pass
+    def __str__(self):
+        name = self.project.get('project_name') if isinstance(self.project, dict) else str(self.id)
+        return f'UserProject {name} for {self.user}'

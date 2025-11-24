@@ -9,7 +9,9 @@ from django.shortcuts import render, redirect
 
 from .forms import CreateUserForm, LoginForm
 
-from django.http import HttpResponse, HttpRequest, HttpResponseBadRequest
+from django.http import HttpResponse, HttpRequest, HttpResponseBadRequest, JsonResponse
+from django.views.decorators.http import require_POST
+import json
 
 from django.db.models import Count
 
@@ -255,8 +257,7 @@ def _reset_quiz(request) -> HttpRequest:
     return request
 
 def dashboard(request):
-
-    return render(request, 'app/dashboard.html')
+    return rec_view(request)
 
 
 def user_logout(request):
@@ -282,9 +283,50 @@ def rec_view(request):
 
         request.session["saved_projects"] = projects
 
-    return render(request, "app/dashboard.html", {"projects": projects})
+    chosen_project = None
+    if request.user.is_authenticated:
+        try:
+            up = UserProject.objects.filter(user=request.user).order_by('-created_at').first()
+            if up:
+                chosen_project = up.project
+                request.session['chosen_project'] = chosen_project
+        except Exception:
+            chosen_project = request.session.get('chosen_project')
 
+    return render(request, "app/dashboard.html", {"projects": projects, "chosen_project": chosen_project})
+
+@require_POST
 def save_chosen_project(request):
+    index = None
+    try:
+        payload = json.loads(request.body.decode() or "{}")
+        if isinstance(payload, dict) and "index" in payload:
+            index = int(payload.get("index"))
+    except Exception:
+        index = None
 
-    print("hello")
+    if index is None:
+        try:
+            index = int(request.POST.get("index", "-1"))
+        except Exception:
+            return HttpResponseBadRequest("Invalid payload")
+
+    projects = request.session.get("saved_projects")
+    if not projects:
+        projects = generate_project.get_project_recs(request.user)
+
+    if not isinstance(projects, list) or index < 0 or index >= len(projects):
+        return HttpResponseBadRequest("Invalid index")
+
+    chosen = projects[index]
+    request.session["chosen_project"] = chosen
+
+    if request.user.is_authenticated:
+        try:
+            from .models import UserProject
+            UserProject.objects.create(user=request.user, project=chosen)
+        except Exception:
+            pass
+
+    return JsonResponse({"success": True})
 
