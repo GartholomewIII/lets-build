@@ -31,6 +31,8 @@ urlpatterns = [
 
     path("save-interests", views.save_interests, name="save-interests"),
 
-    path("save-project", views.save_chosen_project, name="save-project")
+    path("save-project", views.save_chosen_project, name="save-project"),
+
+    path("index/", views.index, name="index"),
 
 ]

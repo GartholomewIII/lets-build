@@ -1,22 +1,25 @@
+console.log("project-select.js loaded");
+
 (function () {
     const container = document.getElementById('projects');
     if (!container) return;
 
     const saveUrl = container.dataset.saveUrl;
     const cards = container.querySelectorAll('.project-card');
-    let continueContainer = document.getElementById('continue-container');
+
+    const continueContainer = document.getElementById('continue-container');
     const continueBtn = document.getElementById('continue-btn');
-    if (!continueContainer) continueContainer = document.querySelector('.continue-btn-box');
 
     let selectedIndex = null;
 
+    // Get CSRF token
     function getCookie(name) {
         let cookieValue = null;
         if (document.cookie && document.cookie !== '') {
             const cookies = document.cookie.split(';');
             for (let i = 0; i < cookies.length; i++) {
                 const cookie = cookies[i].trim();
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                if (cookie.startsWith(name + '=')) {
                     cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                     break;
                 }
@@ -27,50 +30,91 @@
 
     const csrftoken = getCookie('csrftoken');
 
-        function setSelected(index) {
-        selectedIndex = Number(index);
+    function setSelected(index) {
+        index = Number(index);
+
+
+        if (selectedIndex === index) {
+            selectedIndex = null;
+
+            cards.forEach(card => {
+                card.classList.remove('selected');
+                card.setAttribute('aria-pressed', 'false');
+            });
+
+            // Hide continue button
+            continueContainer.style.display = "none";
+            return;
+        }
+
+        // Otherwise, select new card
+        selectedIndex = index;
+
         cards.forEach(card => {
-            const isSelected = card.dataset.index === String(index);
+            const isSelected = Number(card.dataset.index) === index;
             card.classList.toggle('selected', isSelected);
             card.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
         });
-            if (continueContainer) {
-                try { continueContainer.style.display = 'flex'; } catch(e) { continueContainer.style.display = 'block'; }
-            }
+
+        // Show continue button
+        continueContainer.style.display = "flex";
     }
 
+    // Attach card listeners
     cards.forEach(card => {
-        card.addEventListener('click', () => setSelected(card.dataset.index));
+        const index = card.dataset.index;
+
+        // Click anywhere on card
+        card.addEventListener('click', () => setSelected(index));
+
+        // Click select button only
         const btn = card.querySelector('.select-btn');
         if (btn) {
-            btn.addEventListener('click', (e) => { e.stopPropagation(); setSelected(btn.dataset.index); });
+            btn.addEventListener('click', e => {
+                e.stopPropagation();
+                setSelected(index);
+            });
         }
+
+        // Keyboard support
         card.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelected(card.dataset.index); }
+            if (['Enter', ' '].includes(e.key)) {
+                e.preventDefault();
+                setSelected(index);
+            }
         });
     });
 
+    // Save selected project
     function postSelection(index) {
-        if (!saveUrl) { alert('Save URL not configured.'); return; }
-        continueBtn.disabled = true;
         fetch(saveUrl, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken },
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken
+            },
             body: JSON.stringify({ index: Number(index) })
         })
-        .then(response => {
-            if (!response.ok) return response.text().then(t => { throw new Error(t || 'Server error'); });
-            return response.json();
-        })
+        .then(response => response.json())
         .then(data => {
-            if (data && data.success) window.location.reload(); else alert('Could not save project.');
+            if (data.success) {
+                window.location.href = data.redirect_url;  // <-- redirect to index.html
+            } else {
+                alert('Could not save project.');
+            }
         })
-        .catch(err => { console.error('Save error:', err); alert('Error saving project: ' + (err.message || err)); })
-        .finally(() => { continueBtn.disabled = false; });
+        .catch(err => {
+            console.error(err);
+            alert('Error saving project.');
+        });
     }
 
-    if (continueBtn) continueBtn.addEventListener('click', () => {
-        if (selectedIndex === null) { alert('Please select a project first.'); return; }
+    // Continue / choose project button click
+    continueBtn.addEventListener('click', () => {
+        if (selectedIndex === null) {
+            alert("Please select a project first.");
+            return;
+        }
         postSelection(selectedIndex);
     });
 })();

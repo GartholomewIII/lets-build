@@ -15,7 +15,7 @@ import json
 
 from django.db.models import Count
 
-from .models import Quiz, Question, Answer, SurveyAnswer, SurveySubmission, UserProject
+from .models import Quiz, Question, Answer, SurveyAnswer, SurveySubmission
 
 from django.core.paginator import Paginator
 
@@ -26,6 +26,8 @@ from django.contrib.auth import authenticate, login, logout
 from typing import Optional
 
 from .project_gen import generate_project
+
+from django.urls import reverse
 
 ALLOWED_INTERESTS = {
     "basketball","music","coding","cooking","gaming",
@@ -274,44 +276,67 @@ def get_interests(request):
     return render(request, 'app/interests.html')
 
 def rec_view(request):
-    # Always regenerate projects (useful during development and after quiz completion)
-    projects = generate_project.get_project_recs(request.user)
-    request.session["saved_projects"] = projects
+    projects = request.session.get("saved_projects")
+
+    if not projects:
+        projects = generate_project.get_project_recs(request.user)
+        request.session["saved_projects"] = projects
 
     return render(request, "app/dashboard.html", {"projects": projects})
 
 @require_POST
 def save_chosen_project(request):
+    
     index = None
+
     try:
+
         payload = json.loads(request.body.decode() or "{}")
-        if isinstance(payload, dict) and "index" in payload:
-            index = int(payload.get("index"))
+        if isinstance(payload, dict):
+            index = int(payload.get("index", None))
+
     except Exception:
         index = None
 
+
     if index is None:
         try:
-            index = int(request.POST.get("index", "-1"))
+            index = int(request.POST.get("index", None))
+
         except Exception:
-            return HttpResponseBadRequest("Invalid payload")
+            return HttpResponseBadRequest("Invalid Payload")
 
     projects = request.session.get("saved_projects")
+
     if not projects:
+
         projects = generate_project.get_project_recs(request.user)
 
-    if not isinstance(projects, list) or index < 0 or index >= len(projects):
-        return HttpResponseBadRequest("Invalid index")
+    if (
+        not isinstance(projects, list) or
+        index is None or
+        index < 0 or 
+        index >= len(projects)
+    ):
+        return HttpResponseBadRequest("Invalid Index")
 
-    chosen = projects[index]
-    request.session["chosen_project"] = chosen
+    chosen_project = projects[index]
+
+    request.session["chosen_project"] = chosen_project
 
     if request.user.is_authenticated:
+        from .models import UserProject
+
         try:
-            from .models import UserProject
-            UserProject.objects.create(user=request.user, project=chosen)
+            UserProject.objects.create(
+                user= request.user,
+                project= chosen_project
+            )
         except Exception:
             pass
 
-    return JsonResponse({"success": True})
+    return JsonResponse({
+        "success": True,
+        "redirect_url": reverse("index")
+    })    
 
