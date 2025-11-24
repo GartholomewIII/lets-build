@@ -275,6 +275,11 @@ def go_to_register(request):
 def get_interests(request):
     return render(request, 'app/interests.html')
 
+def index(request):
+    chosen = request.session.get("chosen_project")
+    return render(request, "app/index.html", {"chosen": chosen})
+
+
 def rec_view(request):
     projects = request.session.get("saved_projects")
 
@@ -334,7 +339,6 @@ def save_chosen_project(request):
             )
         except Exception:
             pass
-
     return JsonResponse({
         "success": True,
         "redirect_url": reverse("index")
