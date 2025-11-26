@@ -201,6 +201,24 @@ body {
         justify-content: center;
         align-items: center;
     }
+    .drop-down-positon {
+        position: absolute;
+        top: 20px;
+        right: 60px;
+        
+    }
+
+    .dropdown-content {
+        position: absolute;
+        display: none;
+        flex-direction: column;
+    }
+
+    .icon {
+        width: 35px;
+        height: 35px;
+        background-color: black;
+    }
 }
 
 /* xxl ≥1400px (BS5) */

@@ -246,8 +246,6 @@ def get_finish(request) -> HttpResponse:
     responses_count = len(responses)
 
 
-    request = _reset_quiz(request)
-
     return rec_view(request)
 
 def _reset_quiz(request) -> HttpRequest:
@@ -289,6 +287,12 @@ def index(request):
 
 
 def rec_view(request):
+
+    regen = request.method == "POST" and request.POST.get("regenerate")
+
+    if regen:
+        request.session.pop("saved_projects", None)
+        
     projects = request.session.get("saved_projects")
 
     if not projects:

@@ -35,4 +35,6 @@ urlpatterns = [
 
     path("index", views.index, name="index"),
 
+    path("rec-view", views.rec_view, name="rec-view")
+
 ]

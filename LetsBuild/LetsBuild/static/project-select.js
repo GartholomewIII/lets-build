@@ -132,3 +132,13 @@ console.log("project-select.js loaded");
         postSelection(selectedIndex);
     });
 })();
+
+function toggleMenu() {
+    const dropdownContent = document.querySelector('.dropdown-content');
+    if (dropdownContent.style.display == 'flex') {
+        dropdownContent.style.display = 'none'
+    }
+    else {
+        dropdownContent.style.display = 'flex';
+    }
+}

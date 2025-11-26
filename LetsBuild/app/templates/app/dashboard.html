@@ -63,11 +63,27 @@
     <!--<a href="{% url 'user-logout' %}">logout</a> -->
 
 </div>
-<div class="continue-btn-box" id="continue-container" style="display:none; justify-content:center;">
-    <div class="continue-btn-wrapper">
-        <button type="button" id="continue-btn" class="continue-btn">Choose Project</button>
+
+    <div class="continue-btn-box" id="continue-container" style="display:none; justify-content:center;">
+        <div class="continue-btn-wrapper">
+            <button type="button" id="continue-btn" class="continue-btn">Choose Project</button>
+        </div>
     </div>
-</div>
+    
+    <div class="drop-down-positon">
+        <div class="option-drop-down">
+            <div class="icon" onclick="toggleMenu()">
+            </div>
+            <div class="dropdown-content" data-save-url="{% url 'rec-view' %}">
+                <form method="post" action="{% url 'rec-view' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="regenerate" value="1">
+                    <button type="submit">Re-Generate Projects</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
 <script src="{% static 'project-select.js' %}" defer></script>
 </body>
 </html>
