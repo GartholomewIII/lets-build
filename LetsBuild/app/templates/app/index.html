@@ -10,32 +10,46 @@
 </head>
 <body>
 
-    <div class="gif-example"
-
-    <div class="project">
-        <div class="project-name-box">
+<div class="content-parent">
+    <div class=main-content>
+        <div class="top-bar">
             <h1>{{ chosen.project_name }}</h1>
         </div>
 
-        <div class="difficulty-box">
-            <h1>{{ chosen.difficulty }}</h1>
+        <div class="bottom-cont">
+            <div class="left-bar">
+                <h1>{{ chosen.difficulty }}</h1>
+                <h1>{{ chosen.areas_of_focus }}</h1>
+            </div>
+
+            <div class="center-bar">
+                <div class="top-center">
+                    <div class="gif-example"></div>
+                </div>
+
+                <div class="bottom-center">
+
+                </div>
+            </div>
+
+            <div class="right-bar">
+                <div class="list-of-steps-box">
+                    <ul id="todo-list"></ul>
+                        {% for steps in chosen.list_of_steps %}
+                        <li data-index="{{ forloop.counter0 }}">
+                            <input type="checkbox" id="task1">
+                            <label for="task1">{{ steps }}</label>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+            </div>
         </div>
 
-        <div class="areas-of-focus-box">
-            <h1>{{ chosen.areas_of_focus }}</h1>
-        </div>
-
-        <div class="list-of-steps-box">
-            <ul id="todo-list"></ul>
-            {% for steps in chosen.list_of_steps %}
-                <li data-index="{{ forloop.counter0 }}">
-                    <input type="checkbox" id="task1">
-                    <label for="task1">{{ steps }}</label>
-                </li>
-            {% endfor %}
-            </ul>
-        </div>
     </div>
+</div>
+
 
     <div class="drop-down-positon">
         <div class="option-drop-down">
