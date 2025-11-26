@@ -34,23 +34,20 @@
 
             <div class="right-bar">
                 <div class="list-of-steps-box">
-                    <ul id="todo-list"></ul>
+                    <ul id="todo-list">
                         {% for steps in chosen.list_of_steps %}
-
-                        <form method="post" url="{% url 'get-more-steps' %}">
-                            {% csrf_token %}
                             <li data-index="{{ forloop.counter0 }}">
-                                <input type="checkbox" id="task1">
-                                <label for="task1">{{ steps }}</label>
-                                <button type="submit">More steps</button>
-                            </li>
-                        </form>
+                                <input type="checkbox" id="task{{ forloop.counter }}">
+                                <label for="task{{ forloop.counter }}">{{ steps }}</label>
 
+                                <form method="post" action="{% url 'get-more-steps' %}">
+                                    {% csrf_token %}
+                                    <button type="submit">More steps</button>
+                                </form>
+                            </li>
                         {% endfor %}
-                    
                     </ul>
                 </div>
-
             </div>
         </div>
 

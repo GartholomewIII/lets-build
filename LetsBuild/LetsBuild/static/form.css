@@ -148,6 +148,7 @@ body {
     }
     /* QUIZ ELEMENTS */
 
+
     .option {
         border-radius: 10px;
     }
@@ -266,6 +267,7 @@ body {
 
         transition: filter 0.3s ease;
     }
+    
     .git-hub-link:hover, .insta-link:hover, .twitter-link:hover {
         cursor: pointer;
         
