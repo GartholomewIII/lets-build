@@ -80,6 +80,12 @@
                     <input type="hidden" name="regenerate" value="1">
                     <button type="submit">Re-Generate Projects</button>
                 </form>
+
+                <form method="post" action="{% url 'quiz' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="retake-quiz" value="1">
+                    <button type="submit">Retake Quiz</button>
+                </form>
             </div>
         </div>
     </div>

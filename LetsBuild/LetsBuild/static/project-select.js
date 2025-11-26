@@ -135,10 +135,14 @@ console.log("project-select.js loaded");
 
 function toggleMenu() {
     const dropdownContent = document.querySelector('.dropdown-content');
+    const icon = document.querySelector('.icon');
+
     if (dropdownContent.style.display == 'flex') {
         dropdownContent.style.display = 'none'
     }
     else {
         dropdownContent.style.display = 'flex';
     }
+    dropdownContent.classList.toggle('show');  
+    icon.classList.toggle('rotated'); 
 }

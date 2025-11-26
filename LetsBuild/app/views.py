@@ -15,7 +15,7 @@ import json
 
 from django.db.models import Count
 
-from .models import Quiz, Question, Answer, SurveyAnswer, SurveySubmission
+from .models import Quiz, Question, Answer, SurveyAnswer, SurveySubmission, UserProject
 
 from django.core.paginator import Paginator
 
@@ -74,6 +74,12 @@ def homepage(request):
 
 def quiz(request):
     topics = Quiz.objects.all().annotate(questions_count=Count('question'))
+
+    retake = request.method == "POST" and request.POST.get("retake-quiz")
+
+    if retake:
+        request.session.pop("quiz_id", None)
+        request.session.pop("responses", None)
     
     return render(request, "app/quiz.html", {"topics": topics})
 
@@ -122,7 +128,7 @@ def login(request):
             if user is not None:
                 auth.login(request, user)
 
-                if user_data.last_login is None:
+                if user_data.last_login is None or UserProject.objects.filter(user=user).exists() == False:
                     topics = Quiz.objects.all().annotate(questions_count= Count('question'))
                     return render(
                         request, 'app/quiz.html', context={'topics': topics}
@@ -288,11 +294,11 @@ def index(request):
 
 def rec_view(request):
 
-    regen = request.method == "POST" and request.POST.get("regenerate")
+    regen = request.method == "POST" and request.POST.get("regenerate") == '1'
 
     if regen:
         request.session.pop("saved_projects", None)
-        
+
     projects = request.session.get("saved_projects")
 
     if not projects:
