@@ -51,7 +51,6 @@
         text-align: left;
         border: none;
         font-family: 'Tiempos';
-        color: white;
 
     }
 
@@ -59,7 +58,6 @@
         width: 35px;
         height: 35px;
         background-image: url('assets/icons/drop-down.png');
-        filter: invert(100%);
         background-size: cover;   /* or contain */
         background-repeat: no-repeat;
         background-position: center;

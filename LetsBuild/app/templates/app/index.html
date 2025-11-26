@@ -25,7 +25,14 @@
         </div>
 
         <div class="list-of-steps-box">
-            <h1>{{ chosen.list_of_steps }}</h1>
+            <ul id="todo-list"></ul>
+            {% for steps in chosen.list_of_steps %}
+                <li data-index="{{ forloop.counter0 }}">
+                    <input type="checkbox" id="task1">
+                    <label for="task1">{{ steps }}</label>
+                </li>
+            {% endfor %}
+            </ul>
         </div>
     </div>
 
