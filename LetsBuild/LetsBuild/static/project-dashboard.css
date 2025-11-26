@@ -1,0 +1,79 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Recommended for consistent box model behavior */
+}
+
+
+/* sm ≥576px */
+@media (min-width: 576px) { 
+
+}
+
+/* md ≥768px */
+@media (min-width: 768px) { 
+
+}
+/* lg ≥992px */
+@media (min-width: 992px) { 
+
+}
+/* xl ≥1200px */
+@media (min-width: 1200px) { 
+        .drop-down-positon {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        
+    }
+
+    .dropdown-content {
+        position: absolute;
+        display: none;
+        flex-direction: column;
+        left: 0;
+        
+        transition: max-height 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+        opacity: 0;
+        transform: translateY(-20px);
+
+    }
+
+    .dropdown-content.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .dropdown-content button {
+        all: unset;
+        white-space: nowrap;
+        width: 100%;
+        text-align: left;
+        border: none;
+        font-family: 'Tiempos';
+        color: white;
+
+    }
+
+    .icon {
+        width: 35px;
+        height: 35px;
+        background-image: url('assets/icons/drop-down.png');
+        filter: invert(100%);
+        background-size: cover;   /* or contain */
+        background-repeat: no-repeat;
+        background-position: center;
+        cursor: pointer;
+
+        transition: transform 0.3s ease; 
+    }
+
+    .icon.rotated {
+        transform: rotate(180deg);
+    }
+}
+
+/* xxl ≥1400px (BS5) */
+@media (min-width: 1400px) {
+
+}
