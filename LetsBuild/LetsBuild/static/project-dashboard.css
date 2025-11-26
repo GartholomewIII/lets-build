@@ -19,7 +19,22 @@
 
 }
 /* xl ≥1200px */
-@media (min-width: 1200px) { 
+@media (min-width: 1200px) {
+    
+    
+    .gif-example {
+        width: 500px;
+        height: 500px;
+        background-image: url('assets/lets-build-center.gif');
+        background-size: cover;   /* or contain */
+        background-repeat: no-repeat;
+        background-position: center;
+        cursor: pointer;
+
+        image-rendering: pixelated;
+        image-rendering: -moz-crisp-edges; /* Firefox specific */
+        image-rendering: -webkit-optimize-contrast;
+    }
         .drop-down-positon {
         position: absolute;
         top: 20px;
