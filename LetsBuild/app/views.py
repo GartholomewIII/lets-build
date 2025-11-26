@@ -136,9 +136,9 @@ def login(request):
                     
                 
                 else:
-                    return render(
-                        request, 'app/index.html'
-                    )
+                    return redirect("index")
+
+                    
 
     context = {'loginform': form}
 
@@ -288,7 +288,8 @@ def get_interests(request):
     return render(request, 'app/interests.html')
 
 def index(request):
-    chosen = request.session.get("chosen_project")
+    record = UserProject.objects.filter(user=request.user).order_by('-created_at').first()
+    chosen = record.project if record else None
     return render(request, "app/index.html", {"chosen": chosen})
 
 
