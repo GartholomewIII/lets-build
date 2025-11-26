@@ -343,3 +343,5 @@ def save_chosen_project(request):
         "redirect_url": reverse("index")  # change if needed
     })
 
+def get_more_steps(request):
+    print('hello')

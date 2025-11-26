@@ -35,6 +35,8 @@ urlpatterns = [
 
     path("index", views.index, name="index"),
 
-    path("rec-view", views.rec_view, name="rec-view")
+    path("rec-view", views.rec_view, name="rec-view"),
+
+    path("get-more-steps", views.get_more_steps, name="get-more-steps")
 
 ]

@@ -4,6 +4,16 @@
     box-sizing: border-box; /* Recommended for consistent box model behavior */
 }
 
+@font-face {
+    font-family: 'Tiempos';
+    src: url('assets/fonts/Tiempos-Headline.otf') format('opentype');
+}
+
+
+body {
+    font-family: 'Tiempos';
+    
+}
 
 /* sm ≥576px */
 @media (min-width: 576px) { 
@@ -20,12 +30,16 @@
 }
 /* xl ≥1200px */
 @media (min-width: 1200px) {
-    div {
-        border: 1px solid black;
-    }
-    .content-parent {
-        width: 100%;
+    body, html {
         height: 100%;
+        width: 100%;
+    }
+
+
+
+    .content-parent {
+        width: 100vw;
+        height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -53,6 +67,15 @@
         height: 200px;
     }
 
+    .right-bar, .left-bar {
+        flex: 1;
+        height: 100%;
+    }
+
+    .center-bar {
+        height: 100%;
+    }
+
 
     .gif-example {
         width: 100%;
@@ -67,6 +90,18 @@
         image-rendering: -moz-crisp-edges; /* Firefox specific */
         image-rendering: -webkit-optimize-contrast;
     }
+
+    .list-of-steps {
+        height: 100%;
+        padding: 100px;
+    }
+
+    #todo-list {
+        height: 100%;
+    }
+
+
+
         .drop-down-positon {
         position: absolute;
         top: 20px;

@@ -18,8 +18,7 @@
 
         <div class="bottom-cont">
             <div class="left-bar">
-                <h1>{{ chosen.difficulty }}</h1>
-                <h1>{{ chosen.areas_of_focus }}</h1>
+                <h1>Quotes</h1>
             </div>
 
             <div class="center-bar">
@@ -28,7 +27,8 @@
                 </div>
 
                 <div class="bottom-center">
-
+                    <h1>Difficulty: {{ chosen.difficulty }}</h1>
+                    <h1>Area of Focus{{ chosen.areas_of_focus }}</h1>
                 </div>
             </div>
 
@@ -36,11 +36,18 @@
                 <div class="list-of-steps-box">
                     <ul id="todo-list"></ul>
                         {% for steps in chosen.list_of_steps %}
-                        <li data-index="{{ forloop.counter0 }}">
-                            <input type="checkbox" id="task1">
-                            <label for="task1">{{ steps }}</label>
-                        </li>
+
+                        <form method="post" url="{% url 'get-more-steps' %}">
+                            {% csrf_token %}
+                            <li data-index="{{ forloop.counter0 }}">
+                                <input type="checkbox" id="task1">
+                                <label for="task1">{{ steps }}</label>
+                                <button type="submit">More steps</button>
+                            </li>
+                        </form>
+
                         {% endfor %}
+                    
                     </ul>
                 </div>
 
