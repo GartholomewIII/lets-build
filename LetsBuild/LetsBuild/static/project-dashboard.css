@@ -39,7 +39,12 @@ body {
         width: 100%;
     }
 
-
+    .top-bar {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
     .content-parent {
         width: 100vw;
@@ -75,9 +80,17 @@ body {
         flex: 1;
         height: 100%;
     }
+    #quote-box {
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+    #quote-box.show {
+        opacity: 1;
+    }
 
     .center-bar {
         height: 100%;
+        padding: 2.5%;
     }
 
 

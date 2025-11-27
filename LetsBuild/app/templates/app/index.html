@@ -18,7 +18,10 @@
 
         <div class="bottom-cont">
             <div class="left-bar">
-                <h1>Quotes</h1>
+                <div id="quote-box">
+                    <p id="quote-text">Loading quote...</p>
+                    <p id="quote-author"></p>
+                </div>
             </div>
 
             <div class="center-bar">
@@ -82,5 +85,6 @@
     </div>
 
 <script src="{% static 'project-select.js' %}" defer></script> 
+<script src="{% static 'index.js' %}" defer></script>
 </body>
 </html>

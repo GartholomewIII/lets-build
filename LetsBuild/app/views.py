@@ -29,6 +29,9 @@ from .project_gen import generate_project
 
 from django.urls import reverse
 
+import requests
+
+
 ALLOWED_INTERESTS = {
     "basketball","music","coding","cooking","gaming",
     "movies","reading","biology","soccer","painting",
@@ -345,3 +348,17 @@ def save_chosen_project(request):
 
 def get_more_steps(request):
     print('hello')
+
+
+
+def get_quote(request):
+    try:
+        response = requests.get("https://type.fit/api/quotes", timeout=5)
+        print("STATUS:", response.status_code)
+        print("TEXT:", response.text[:200])  # print first 200 characters
+
+        quotes = response.json()
+        return JsonResponse({"quotes": quotes})
+    except Exception as e:
+        print("Quote API error:", e)
+        return JsonResponse({"quotes": []})
