@@ -1,23 +1,32 @@
-async function loadQuotes() {
+async function getQuote() {
+    const box = document.getElementById("quote-box");
+
     try {
-        const res = await fetch("/get-quote");
+        // fade out
+        box.classList.remove("show");
+
+        // wait for fade-out animation to complete
+        await new Promise(resolve => setTimeout(resolve, 300));
+
+        // fetch the quote from Django
+        const res = await fetch("/get-quote/");
         const data = await res.json();
-        window.allQuotes = data.quotes;
-        showRandomQuote();
+
+        // update text
+        document.getElementById("quote-text").textContent = data.text;
+        document.getElementById("quote-author").textContent = data.author ? "— " + data.author : "";
+
+        // fade in
+        setTimeout(() => {
+            box.classList.add("show");
+        }, 50);
+
     } catch (err) {
-        console.error("Failed to load quotes", err);
+        console.error("Quote error:", err);
     }
 }
 
-function showRandomQuote() {
-    if (!window.allQuotes || window.allQuotes.length === 0) return;
-
-    const q = window.allQuotes[Math.floor(Math.random() * window.allQuotes.length)];
-    document.getElementById("quote").innerText = q.text || "No quote available";
-    document.getElementById("author").innerText = q.author || "Unknown";
-}
-
 document.addEventListener("DOMContentLoaded", () => {
-    loadQuotes();
-    setInterval(showRandomQuote, 15000);
+    getQuote();             // initial load
+    setInterval(getQuote, 300000);  // rotate quotes
 });

@@ -353,12 +353,11 @@ def get_more_steps(request):
 
 def get_quote(request):
     try:
-        response = requests.get("https://type.fit/api/quotes", timeout=5)
-        print("STATUS:", response.status_code)
-        print("TEXT:", response.text[:200])  # print first 200 characters
-
-        quotes = response.json()
-        return JsonResponse({"quotes": quotes})
+        r = requests.get("https://zenquotes.io/api/random", timeout=5)
+        data = r.json()  # this is a list with one dict
+        quote = data[0]  # {"q": "...", "a": "..."}
+        return JsonResponse({"text": quote["q"], "author": quote["a"]})
     except Exception as e:
         print("Quote API error:", e)
-        return JsonResponse({"quotes": []})
+        # fallback
+        return JsonResponse({"text": "Stay inspired!", "author": ""})

@@ -39,6 +39,7 @@ urlpatterns = [
 
     path("get-more-steps", views.get_more_steps, name="get-more-steps"),
     
-    path("get-quote", views.get_quote, name="get-quote"),
+    path("get-quote/", views.get_quote, name="get-quote"),
+
 
 ]
