@@ -141,10 +141,10 @@ def get_logged_in_prompt(user):
 
 
 def get_project_recs(user):
+    
     llm = ChatOllama(model="llama3.2:1b")
     prompt = get_logged_in_prompt(user)
     ai_msg = llm.invoke(prompt)
-    print(ai_msg)
     return _clean_text(ai_msg.content)
 
 

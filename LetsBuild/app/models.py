@@ -108,3 +108,4 @@ class UserProject(models.Model):
     def __str__(self):
         name = self.project.get('project_name') if isinstance(self.project, dict) else str(self.id)
         return f'UserProject {name} for {self.user}'
+

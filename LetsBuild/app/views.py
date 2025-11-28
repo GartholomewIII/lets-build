@@ -27,6 +27,8 @@ from typing import Optional
 
 from .project_gen import generate_project
 
+from .project_gen import generate_steps
+
 from django.urls import reverse
 
 import requests
@@ -347,7 +349,10 @@ def save_chosen_project(request):
     })
 
 def get_more_steps(request):
-    print('hello')
+
+    get_more_steps(request.user, step)
+
+
 
 
 
