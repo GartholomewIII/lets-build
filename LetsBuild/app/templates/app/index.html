@@ -30,8 +30,18 @@
                 </div>
 
                 <div class="bottom-center">
-                    <h1>Difficulty: {{ chosen.difficulty }}</h1>
-                    <h1>Area of Focus{{ chosen.areas_of_focus }}</h1>
+                    <div class="bottom-center-cont">
+
+                        <div class="difficulty-box">
+                            <h3>Difficulty: {{ chosen.difficulty }}</h3>
+                        </div>
+                        <div class="area-of-focus-box">
+                            <h3>Areas of Focus:</h3>
+                            {% for i in chosen.areas_of_focus %}
+                            <h3>{{ i }}</h3>
+                            {% endfor %}
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -39,7 +49,7 @@
                 <div class="list-of-steps-box">
                     <ul id="todo-list">
                         {% for steps in chosen.list_of_steps %}
-                            <li data-index="{{ forloop.counter0 }}">
+                            <li class="to-do-list-items" data-index="{{ forloop.counter0 }}">
                                 <input type="checkbox" id="task{{ forloop.counter }}">
                                 <label for="task{{ forloop.counter }}">{{ steps }}</label>
 

@@ -3,7 +3,9 @@
     padding: 0;
     box-sizing: border-box; /* Recommended for consistent box model behavior */
 }
-
+ul {
+    list-style-type: none;
+    }
 @font-face {
     font-family: 'Tiempos';
     src: url('assets/fonts/Tiempos-Headline.otf') format('opentype');
@@ -66,6 +68,12 @@ body {
 
     }
 
+    .bottom-center-cont {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
     .top-center {
         width: 200px;
         height: 200px;
@@ -74,23 +82,37 @@ body {
     .bottom-center {
         width: 200px;
         height: 200px;
+        font-size: small;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
+
+    
 
     .right-bar, .left-bar {
         flex: 1;
         height: 100%;
-        border: 1px solid black;
+        background-color: black;
+        color: white;
     }
     .left-bar, .center-bar, .right-bar {
     min-width: 0;    
     }
 
+    .left-bar {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+
+    }
+
     #quote-box {
         opacity: 0;
         transition: opacity 1s ease;
-        height: 100%;
-        width: 100%;
-        border: 1px solid black;
+
         max-width: 100%;
         width: 100%;
         box-sizing: border-box;
@@ -98,12 +120,13 @@ body {
         word-wrap: break-word;
         overflow-wrap: break-word;
         white-space: normal;
+
+        padding: 10px;
     }
     
     #quote-box.show {
         opacity: 1;
-        height: 100%;
-        width: 100%;
+        color: white;
     }
 
     
@@ -112,6 +135,11 @@ body {
         overflow-wrap: break-word;
         white-space: normal;
         max-width: 100%;
+
+        font-size: x-large;
+        text-align: center;
+
+
     }
 
     .center-bar {
@@ -142,7 +170,21 @@ body {
     }
 
     #todo-list {
-        height: 100%;
+
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 20px;
+        margin-right: 20px;
+    }
+
+    .to-do-list-items {
+        display: flex;
+    }
+
+    .to-do-list-items label {
+        font-size: small;
+        padding-left: 5px;
     }
 
 
