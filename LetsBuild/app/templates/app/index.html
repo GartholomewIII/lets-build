@@ -48,13 +48,17 @@
             <div class="right-bar">
                 <div class="list-of-steps-box">
                     <ul id="todo-list">
-                        {% for steps in chosen.list_of_steps %}
+                        {% for step in chosen.list_of_steps %}
                             <li class="to-do-list-items" data-index="{{ forloop.counter0 }}">
                                 <input type="checkbox" id="task{{ forloop.counter }}">
-                                <label for="task{{ forloop.counter }}">{{ steps }}</label>
+                                <label for="task{{ forloop.counter }}">{{ step }}</label>
 
                                 <form method="post" action="{% url 'get-more-steps' %}">
                                     {% csrf_token %}
+                                    <!-- send the step text -->
+                                    <input type="hidden" name="step" value="{{ step }}">
+                                    <!-- optional: send the index so you know where to insert -->
+                                    <input type="hidden" name="index" value="{{ forloop.counter0 }}">
                                     <button type="submit">More steps</button>
                                 </form>
                             </li>

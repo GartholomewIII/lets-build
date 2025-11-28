@@ -8,7 +8,7 @@ import ast
 from langchain_ollama import ChatOllama
 from app.models import UserProject
 from django.contrib.auth import get_user_model
-from generate_project import _clean_text
+from .generate_project import _clean_text
 
 
 
@@ -33,18 +33,31 @@ def _convert_to_LLM_text(chosen_project, step):
 
         With these steps I want you to provide resources, to understand A you must first understand B, and provide a linear learning path to complete the provided step
 
-        I want these 5 steps to be placed within an array
+        I want the output to contain all of the previous steps and I want you to insert the new specified micro steps right after the selected step
+
+        I want these new sub steps to be label a, b, c, d, e
 
         Example output:
             [
             step 1,
+            step 1a,
+            step 1b,
+            step 1c,
+            step 1d,
+            step 1e,
             step 2,
             step 3, 
             step 4,
             step 5,
             ]
 
+        Be specific with these steps, reccomend blogs, youtube videos or books that will help, in order to learn A you must understand B and to understand B you must first read about C and so on
+
+        Return ONLY the JSON array. Do not include any explanatory text or Markdown formatting.
+
         """
+
+
 
     return prompt
 
@@ -56,10 +69,10 @@ def get_prompt(user, step):
     
     project_data = user_project.project
 
-    return _convert_to_LLM_text(project, step)
+    return _convert_to_LLM_text(project_data, step)
 
 
-def get_more_steps(user, step):
+def get_more_steps_function(user, step):
 
     llm = ChatOllama(model="llama3.2:1b")
     prompt = get_prompt(user, step)

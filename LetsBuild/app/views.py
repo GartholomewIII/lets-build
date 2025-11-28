@@ -27,7 +27,7 @@ from typing import Optional
 
 from .project_gen import generate_project
 
-from .project_gen import generate_steps
+from .project_gen.generate_steps import get_more_steps_function
 
 from django.urls import reverse
 
@@ -348,10 +348,26 @@ def save_chosen_project(request):
         "redirect_url": reverse("index")  # change if needed
     })
 
+
 def get_more_steps(request):
 
-    get_more_steps(request.user, step)
+    chosen = request.session.get("chosen_project")
 
+    if request.method == "POST":
+        step = request.POST.get("step")
+        index = request.POST.get("index")
+        if step is not None:
+
+            more_steps = get_more_steps_function(request.user, step)
+
+            print(more_steps)
+            chosen["list_of_steps"] = more_steps
+            return render(request, "app/index.html", {
+                "chosen": chosen
+            })
+
+    # fallback
+    return render(request, "your_template.html", {"chosen": get_current_project_for_user(request.user)})
 
 
 
@@ -359,8 +375,8 @@ def get_more_steps(request):
 def get_quote(request):
     try:
         r = requests.get("https://zenquotes.io/api/random", timeout=5)
-        data = r.json()  # this is a list with one dict
-        quote = data[0]  # {"q": "...", "a": "..."}
+        data = r.json()  
+        quote = data[0] 
         return JsonResponse({"text": quote["q"], "author": quote["a"]})
     except Exception as e:
         print("Quote API error:", e)
