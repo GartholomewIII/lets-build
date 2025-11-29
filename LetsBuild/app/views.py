@@ -78,6 +78,11 @@ def homepage(request):
 
 
 def quiz(request):
+
+    if UserProject.objects.filter(user=request.user) != None:
+        UserProject.objects.filter(user=request.user).delete()
+
+
     topics = Quiz.objects.all().annotate(questions_count=Count('question'))
 
     retake = request.method == "POST" and request.POST.get("retake-quiz")

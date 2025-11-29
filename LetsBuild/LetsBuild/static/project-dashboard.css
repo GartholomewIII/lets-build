@@ -43,6 +43,7 @@ body {
         display: flex;
         align-items: center;
         justify-content: center;
+        padding-bottom: 10px;
     }
 
     .content-parent {
@@ -238,6 +239,12 @@ body {
 
     .icon.rotated {
         transform: rotate(180deg);
+    }
+
+    .share-btn {
+        position: absolute;
+        top: 20px;
+        right: 20px;
     }
 }
 
