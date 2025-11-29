@@ -351,23 +351,18 @@ def save_chosen_project(request):
 
 def get_more_steps(request):
 
-    chosen = request.session.get("chosen_project")
+    chosen_project = get_more_steps_function(request.user, request.POST.get("step"))
 
-    if request.method == "POST":
-        step = request.POST.get("step")
-        index = request.POST.get("index")
-        if step is not None:
 
-            more_steps = get_more_steps_function(request.user, step)
+    request.session["chosen_project"] = chosen_project
 
-            print(more_steps)
-            chosen["list_of_steps"] = more_steps
-            return render(request, "app/index.html", {
-                "chosen": chosen
-            })
+    
+    if request.user.is_authenticated:
+        from .models import UserProject
+        UserProject.objects.filter(user=request.user).delete()
+        UserProject.objects.create(user=request.user, project=chosen_project)
 
-    # fallback
-    return render(request, "your_template.html", {"chosen": get_current_project_for_user(request.user)})
+    return render(request, "app/index.html", {"chosen": chosen_project})
 
 
 

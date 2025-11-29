@@ -53,13 +53,18 @@ def _convert_to_LLM_text(quiz_data, interest_data):
             }}
         ]
 
-        Return ONLY the JSON array. Do not include any explanatory text or Markdown formatting.
+        Return ONLY a valid JSON ARRAY of 3 objects. 
+        Each object must have keys: "project_name", "difficulty", "areas_of_focus", "list_of_steps".
+        Each "list_of_steps" must have exactly 5 steps. 
+        Do NOT include extra text, Markdown, or explanations. 
+        Ensure the JSON is fully parseable.
         """
 
     return prompt
 
 
 def _clean_text(text):
+
     if not isinstance(text, str):
         return []
 
@@ -141,10 +146,11 @@ def get_logged_in_prompt(user):
 
 
 def get_project_recs(user):
-    
+
     llm = ChatOllama(model="llama3.2:1b")
     prompt = get_logged_in_prompt(user)
     ai_msg = llm.invoke(prompt)
+
     return _clean_text(ai_msg.content)
 
 
