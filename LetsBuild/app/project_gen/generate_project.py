@@ -1,3 +1,8 @@
+'''
+Author: Gigawttz
+
+What it Does: generates user projects using the ollama local LLM model
+'''
 import os
 import sys
 import django
@@ -10,7 +15,7 @@ from app.models import SurveySubmission, SurveyAnswer
 from django.contrib.auth import get_user_model
 
 
-# Priv function allows for testing as a script
+
 def _setup_django():
     BASE_DIRECTORY = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     sys.path.append(BASE_DIRECTORY)
@@ -68,14 +73,14 @@ def _clean_text(text):
     if not isinstance(text, str):
         return []
 
-    # strip code fences and stray markers
+
     text = re.sub(r"```[a-zA-Z]*", "", text)
     text = text.replace("```", "")
 
     # normalize smart quotes
     text = text.replace('“', '"').replace('”', '"').replace("‘", "'").replace("’", "'")
 
-    # find start of JSON array or object
+
     start_index = text.find('[')
     if start_index == -1:
         first_obj = text.find('{')
@@ -98,13 +103,12 @@ def _clean_text(text):
         else:
             text = text[start_index:end_index + 1]
 
-    # try loads directly
     try:
         return json.loads(text)
     except json.JSONDecodeError:
         pass
 
-    # remove trailing commas like ,] or ,}
+
     def remove_trailing_commas(s):
         prev = None
         cur = s

@@ -350,7 +350,7 @@ def save_chosen_project(request):
 
     return JsonResponse({
         "success": True,
-        "redirect_url": reverse("index")  # change if needed
+        "redirect_url": reverse("index")  
     })
 
 
