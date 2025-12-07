@@ -10,7 +10,9 @@ ul {
     font-family: 'Tiempos';
     src: url('assets/fonts/Tiempos-Headline.otf') format('opentype');
 }
-
+div {
+    border: 2px solid black;
+}
 
 body {
     font-family: 'Tiempos';
@@ -18,8 +20,57 @@ body {
 }
 
 /* sm ≥576px */
-@media (min-width: 576px) { 
+@media (min-width: 420px) { 
 
+        .drop-down-positon {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+    
+    }
+
+    .dropdown-content {
+        position: absolute;
+        display: none;
+        flex-direction: column;
+        left: 0;
+        
+        transition: max-height 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+        opacity: 0;
+        transform: translateY(-20px);
+
+    }
+
+    .dropdown-content.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .dropdown-content button {
+        all: unset;
+        white-space: nowrap;
+        width: 100%;
+        text-align: left;
+        border: none;
+        font-family: 'Tiempos';
+
+    }
+
+    .icon {
+        width: 35px;
+        height: 35px;
+        background-image: url('assets/icons/drop-down.png');
+        background-size: cover;   /* or contain */
+        background-repeat: no-repeat;
+        background-position: center;
+        cursor: pointer;
+
+        transition: transform 0.3s ease; 
+    }
+
+    .icon.rotated {
+        transform: rotate(180deg);
+    }
 }
 
 
