@@ -17,17 +17,73 @@ html, body, * {
 
 /* sm ≥576px */
 @media (min-width: 576px) { 
+        .register section.vh-100 .card {
+        max-width: clamp(320px, 85vw, 750px); 
+        margin-inline: auto;
+        overflow: hidden; 
+        background-color: rgb(0, 0, 0)
+    }
 
+    .register {
+        background-image: url(assets/register.gif);
+        background-position: bottom center;
+    }
+
+    .register .vh-100 {
+        height: auto !important;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+    }
+
+    .register p {
+        color: white;
+    }
+
+
+    /* REGISTER FORM */
+
+    form ul {
+        display: none;
+    }
+
+    #id_username, #id_email, #id_password1, #id_password2 {
+        font-size: small;
+    }
+
+    form p { margin-bottom: .6rem; }
+    form p > label { margin-bottom: .35rem; font-weight: 600; }
+    .form-control-lg { font-size: 1rem; padding: .5rem .75rem; }
+    .btn-lg { font-size: 1rem; padding: .6rem 1rem; }
+
+    form .helptext { display: none; }
+
+    .row.g-0 { align-items: stretch; }
+    .d-none.d-md-block img { width: 100%; height: 100%; object-fit: cover; }
+
+    form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem 1rem;
+    }
+
+    form p { display: contents; }
+
+    form > * { grid-column: 1 / -1; }
+
+    label[for="id_password2"] { display: none; }
+    #hint_id_password1, #hint_id_password2 { display: none; }
+
+    label[for="id_password1"] { grid-column: 1 / -1; margin-bottom: .25rem; }
+
+    #id_password1 { grid-column: 1; }
+    #id_password2 { grid-column: 2; }
+
+    .pt-1.mb-4,
+    form > a,
+    form > p { grid-column: 1 / -1; }
 }
 
-/* md ≥768px */
-@media (min-width: 768px) { 
-
-}
-/* lg ≥992px */
-@media (min-width: 992px) { 
-
-}
     
 @media (min-width: 1200px) { 
 
@@ -100,6 +156,3 @@ html, body, * {
 
 }
 
-@media (min-width: 1400px) {
-
-}
