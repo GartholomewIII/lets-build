@@ -22,12 +22,36 @@ body {
 /* sm ≥576px */
 @media (min-width: 420px) { 
 
-        .drop-down-positon {
-        position: absolute;
-        top: 20px;
-        left: 20px;
-    
+    .content-parent {
+        padding-top: 100px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+
     }
+
+    .gif-example {
+        width: 100%;
+        height: 100%;
+        background-image: url('assets/lets-build-center.gif');
+        background-size: cover;   /* or contain */
+        background-repeat: no-repeat;
+        background-position: center;
+        cursor: pointer;
+
+        image-rendering: pixelated;
+        image-rendering: -moz-crisp-edges; /* Firefox specific */
+        image-rendering: -webkit-optimize-contrast;
+    }
+    
+    .drop-down-positon {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+
+    }
+
+
 
     .dropdown-content {
         position: absolute;
