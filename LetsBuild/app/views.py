@@ -139,10 +139,7 @@ def login(request):
                 auth.login(request, user)
 
                 if user_data.last_login is None or UserProject.objects.filter(user=user).exists() == False:
-                    topics = Quiz.objects.all().annotate(questions_count= Count('question'))
-                    return render(
-                        request, 'app/quiz.html', context={'topics': topics}
-                    )
+                    return redirect('quiz')
                     
                 
                 else:
@@ -369,9 +366,6 @@ def get_more_steps(request):
 
     return render(request, "app/index.html", {"chosen": chosen_project})
 
-
-
-
 def get_quote(request):
     try:
         r = requests.get("https://zenquotes.io/api/random", timeout=5)
@@ -382,3 +376,5 @@ def get_quote(request):
         print("Quote API error:", e)
         # fallback
         return JsonResponse({"text": "Stay inspired!", "author": ""})
+
+
