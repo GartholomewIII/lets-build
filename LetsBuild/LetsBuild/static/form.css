@@ -15,17 +15,18 @@ body {
     
 }
 
-/* sm ≥576px */
-@media (min-width: 576px) { 
+@media (max-width: 1200px) {
 
-}
+    body {
+        background-image: url('assets/quiz-bg-gif.gif'); 
+        background-size: cover; 
+        background-position: center center; 
+        background-repeat: no-repeat;
+        background-attachment: scroll; 
+        height: 100%;
+        width: 100%;
+    }
 
-/* md ≥768px */
-@media (min-width: 768px) { 
-
-}
-/* lg ≥992px */
-@media (min-width: 992px) { 
 
 }
 /* xl ≥1200px */
