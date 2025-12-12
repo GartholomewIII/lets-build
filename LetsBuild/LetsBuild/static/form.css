@@ -15,6 +15,13 @@ body {
     
 }
 
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;       /* let body fill the viewport */
+}
+
 @media (max-width: 1200px) {
 
     body {
