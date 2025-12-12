@@ -17,9 +17,10 @@ body {
 
 html,
 body {
+    min-height: 100vh;
     margin: 0;
     padding: 0;
-    height: 100%;       /* let body fill the viewport */
+    height: 100%;       
 }
 
 @media (max-width: 1200px) {
@@ -35,7 +36,148 @@ body {
     }
 
 
+    .whole-content, .quiz-container, #topic-container {
+        width: 100%;
+        height: 100%;
+    }
+
+    .content-box {
+
+        display: flex;
+
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+    }
+
+    .project-info {
+        background-color: rgba(255, 255, 255, 0.307);
+        color: black;
+        width: 100%;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 15px;
+
+    }
+
+    .heading-text-box {
+        background-color: #0000006d;
+        color: white;
+        width: 100%;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 15px;
+    }
+
+    #topic-list {
+        background-color: rgba(255, 255, 255, 0.425);
+        color: black;
+        width: 100%;
+        
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        flex-direction: column;
+
+        padding: 15px;
+
+
+    }
+
+
+    .follow {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 100%;
+
+        flex-direction: row;
+
+        position: relative;
+
+        
+        column-gap: 20%;
+
+
+    }
+
+    .insta-logo, .twitter-logo, .github-logo {
+        position: relative;
+        width: 50px;
+        height: 50px;
+
+    }
+
+    .twitter-link {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+
+    }
+    .git-hub-link {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        background-size: cover;
+        background-position: center; 
+        background-repeat: no-repeat;
+    }
+
+    .insta-link {
+        position: absolute;
+        width:100%;
+        height:100%;
+        top:0;
+        left: 0;
+
+
+        background-size: cover;
+        background-position: center; 
+        background-repeat: no-repeat;
+
+        transition: filter 0.3s ease;
+    }
+    
+    .git-hub-link:hover, .insta-link:hover, .twitter-link:hover {
+        cursor: pointer;
+        
+        filter: blur(3px);
+    }
+
+    .insta-link {
+        background-image: url('assets/icons/instagram-glyph-seeklogo.png');
+    }
+
+    .twitter-link {
+        background-image: url('assets/icons/twitter-logo.png');
+    }
+    .git-hub-link {
+        background-image: url('assets/icons/github-mark.png');
+    }
+
+
 }
+
+
+
+
 /* xl ≥1200px */
 @media (min-width: 1200px) { 
 

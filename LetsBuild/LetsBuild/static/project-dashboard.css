@@ -70,7 +70,7 @@ body {
 
 
 /* sm ≥576px */
-@media (min-width: 420px) and (max-width: 1200px) { 
+@media (max-width: 1200px) { 
 
     .content-parent {
         padding-top: 75px; 
