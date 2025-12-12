@@ -16,9 +16,7 @@ body {
     
 }
 
-div {
-    border: 2px solid black;
-}
+
 /* sm ≥576px */
 @media (min-width: 576px) { 
 

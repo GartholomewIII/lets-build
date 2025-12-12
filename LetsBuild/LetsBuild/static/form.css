@@ -23,6 +23,58 @@ body {
     height: 100%;       
 }
 
+.drop-down-positon {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+
+}
+
+.dropdown-content {
+    position: absolute;
+    display: none;
+    flex-direction: column;
+    left: 0;
+    
+    transition: max-height 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+    opacity: 0;
+    transform: translateY(-20px);
+
+    color: white;
+
+}
+
+.dropdown-content.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.dropdown-content button {
+    all: unset;
+    white-space: nowrap;
+    width: 100%;
+    text-align: left;
+    border: none;
+    font-family: 'Tiempos';
+
+}
+
+.icon {
+    width: 35px;
+    height: 35px;
+    background-image: url('assets/icons/drop-down.png');
+    background-size: cover;   /* or contain */
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+
+    transition: transform 0.3s ease; 
+}
+
+.icon.rotated {
+    transform: rotate(180deg);
+}
+
 @media (max-width: 1200px) {
 
     body {
@@ -36,7 +88,7 @@ body {
     }
 
 
-    .whole-content, .quiz-container, #topic-container {
+    .whole-content, .quiz-container {
         width: 100%;
         height: 100%;
     }
@@ -54,32 +106,44 @@ body {
     .project-info {
         background-color: rgba(255, 255, 255, 0.307);
         color: black;
-        width: 100%;
+        width: 75%;
 
         display: flex;
         align-items: center;
         justify-content: center;
 
         padding: 15px;
+
+        height: 500px;
+
+        font-size: xx-large;
+        text-align: center;
+
+        margin-top: 75px;
 
     }
 
     .heading-text-box {
         background-color: #0000006d;
         color: white;
-        width: 100%;
+        width: 75%;
 
         display: flex;
         align-items: center;
         justify-content: center;
 
         padding: 15px;
+
+        margin-top: 75px;
+
+        font-size: xx-large;
+        
     }
 
     #topic-list {
         background-color: rgba(255, 255, 255, 0.425);
         color: black;
-        width: 100%;
+        width: 75%;
         
         display: flex;
         align-items: center;
@@ -89,9 +153,30 @@ body {
 
         padding: 15px;
 
+        font-size: x-large;
+
+        margin-top: 75px;
 
     }
 
+    .btn {
+    background-color: #000000;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-out;
+    display: block;
+    margin: 20px auto;
+
+    font-family: 'Tiempos';
+    }
+
+    .follow-header {
+        margin-top: 75px;
+        font-size: x-large;
+    }
 
     .follow {
         display: flex;
@@ -102,10 +187,10 @@ body {
 
         flex-direction: row;
 
-        position: relative;
-
         
         column-gap: 20%;
+
+        margin-top: 75px;
 
 
     }
@@ -306,7 +391,6 @@ body {
 
     .option input[type='radio'] {
         display: none;
-        /* Hide the radio button */
     }
 
     .option label {
@@ -437,7 +521,3 @@ body {
     }
 }
 
-/* xxl ≥1400px (BS5) */
-@media (min-width: 1400px) {
-
-}

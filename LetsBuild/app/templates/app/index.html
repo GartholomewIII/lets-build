@@ -37,7 +37,7 @@
                         </div>
 
                         <div class="mobile-gif-view">
-                            
+
                         </div>
 
                         <div class="area-of-focus-box">
@@ -77,29 +77,29 @@
 </div>
 
 
-    <div class="drop-down-positon">
-        <div class="option-drop-down">
-            <div class="icon" onclick="toggleMenu()">
-            </div>
-            <div class="dropdown-content" data-save-url="{% url 'rec-view' %}" onsubmit="showLoading()">
-                <form method="post" action="{% url 'quiz' %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="retake-quiz" value="1">
-                    <button type="submit">Retake Quiz</button>
-                </form>
+<div class="drop-down-positon">
+    <div class="option-drop-down">
+        <div class="icon" onclick="toggleMenu()">
+        </div>
+        <div class="dropdown-content" data-save-url="{% url 'rec-view' %}" onsubmit="showLoading()">
+            <form method="post" action="{% url 'quiz' %}">
+                {% csrf_token %}
+                <input type="hidden" name="retake-quiz" value="1">
+                <button type="submit">Retake Quiz</button>
+            </form>
 
-                <form method="post" action="{% url 'user-logout' %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="retake-quiz" value="1">
-                    <button type="submit">Logout</button>
-                </form>
-            </div>
+            <form method="post" action="{% url 'user-logout' %}">
+                {% csrf_token %}
+                <input type="hidden" name="retake-quiz" value="1">
+                <button type="submit">Logout</button>
+            </form>
         </div>
     </div>
+</div>
 
-    <div class="share-btn">
-        <h1>Share</h1>
-    </div>
+<div class="share-btn">
+    <h1>Share</h1>
+</div>
 
 <script src="{% static 'project-select.js' %}" defer></script> 
 <script src="{% static 'index.js' %}" defer></script>
